@@ -28,6 +28,7 @@ class GameScene: SKScene {
         
         self.player = self.childNode(withName: "//PLAYER") as? SKSpriteNode
         
+        
         //self.player?.run(SKAction.init(named: "rectAnim")!, withKey: "fadeInOut")
 
        // let emitter = SKEmitterNode(fileNamed: "fire")!
@@ -80,6 +81,7 @@ class GameScene: SKScene {
         for t in touches {
             //プレイヤーのxの位置を指の位置にする
             self.player?.position.x = t.location(in: self).x
+            print( t.location(in: self).x)
         }
     }
     
@@ -89,6 +91,7 @@ class GameScene: SKScene {
             
             //プレイヤーのxの位置を指の位置にする
             self.player?.position.x = t.location(in: self).x
+            print( t.location(in: self).x)
         }
     }
     
