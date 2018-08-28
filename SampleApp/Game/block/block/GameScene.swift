@@ -15,7 +15,8 @@ class GameScene: SKScene {
     private var spinnyNode : SKShapeNode?
     private var player : SKSpriteNode?
     private var fire : SKEmitterNode?
-    
+    private var ball : SKSpriteNode?
+
     override func didMove(to view: SKView) {
         
         // Get label node from scene and store it for use later
@@ -27,8 +28,13 @@ class GameScene: SKScene {
         
         
         self.player = self.childNode(withName: "//PLAYER") as? SKSpriteNode
-        
-        
+
+
+        let vector = CGVector(dx: 10, dy: 10)
+        self.ball = self.childNode(withName: "//BALL") as? SKSpriteNode
+        self.ball?.physicsBody?.applyImpulse(vector)
+
+
         //self.player?.run(SKAction.init(named: "rectAnim")!, withKey: "fadeInOut")
 
        // let emitter = SKEmitterNode(fileNamed: "fire")!
