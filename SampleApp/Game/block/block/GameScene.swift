@@ -126,6 +126,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func didBegin(_ contact: SKPhysicsContact) {
-        print("xxx")
+        
+        //BLOCKに何かがぶつかったらブロックを消す
+        if (contact.bodyA.node?.name == "BLOCK"){
+            contact.bodyA.node?.removeFromParent()
+        }else if(contact.bodyB.node?.name == "BLOCK" ){
+            contact.bodyB.node?.removeFromParent()
+        }
     }
 }
