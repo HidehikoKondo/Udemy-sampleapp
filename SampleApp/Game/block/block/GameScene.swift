@@ -37,6 +37,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.ball = self.childNode(withName: "//BALL") as? SKSpriteNode
         self.ball?.physicsBody?.applyImpulse(vector)
 
+        //self.player!.physicsBody?.contactTestBitMask = self.ball!.physicsBody!.categoryBitMask
+
 
         //self.player?.run(SKAction.init(named: "rectAnim")!, withKey: "fadeInOut")
 
@@ -123,10 +125,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    func didBeginContact(contact: SKPhysicsContact!)
-    {
-        let bodyAName = contact.bodyA.node?.name;
-        let bodyBName = contact.bodyB.node?.name;
+    func didBegin(_ contact: SKPhysicsContact) {
         print("xxx")
     }
 }
