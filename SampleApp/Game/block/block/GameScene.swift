@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
@@ -18,7 +18,10 @@ class GameScene: SKScene {
     private var ball : SKSpriteNode?
 
     override func didMove(to view: SKView) {
-        
+        //衝突判定のdelegate
+        self.physicsWorld.contactDelegate = self
+
+
         // Get label node from scene and store it for use later
         self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
         if let label = self.label {
@@ -112,5 +115,18 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+
+        //ゲームオーバー判定
+        if( CGFloat((self.ball?.position.y)!) < CGFloat((self.player?.position.y)!)){
+            print("gameover");
+            self.ball?.removeFromParent();
+        }
+    }
+
+    func didBeginContact(contact: SKPhysicsContact!)
+    {
+        let bodyAName = contact.bodyA.node?.name;
+        let bodyBName = contact.bodyB.node?.name;
+        print("xxx")
     }
 }
