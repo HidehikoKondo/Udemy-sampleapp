@@ -16,10 +16,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var player : SKSpriteNode?
     private var fire : SKEmitterNode?
     private var ball : SKSpriteNode?
+    private var blocks : SKNode?
 
     override func didMove(to view: SKView) {
         //衝突判定のdelegate
         self.physicsWorld.contactDelegate = self
+
+
+        //ブロックを配置しているノードを取得
+        self.blocks = self.childNode(withName: "//BLOCKS") as? SKNode
 
 
         // Get label node from scene and store it for use later
@@ -33,7 +38,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.player = self.childNode(withName: "//PLAYER") as? SKSpriteNode
 
 
-        let vector = CGVector(dx: 10, dy: 10)
+        let vector = CGVector(dx: 5, dy: -10)
         self.ball = self.childNode(withName: "//BALL") as? SKSpriteNode
         self.ball?.physicsBody?.applyImpulse(vector)
 
@@ -120,18 +125,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         //ゲームオーバー判定
         if( CGFloat((self.ball?.position.y)!) < CGFloat((self.player?.position.y)!)){
-            print("gameover");
             self.ball?.removeFromParent();
+            self.gameOver();
         }
     }
 
+    //ボールとブロックの衝突発生時の処理
     func didBegin(_ contact: SKPhysicsContact) {
-        
         //BLOCKに何かがぶつかったらブロックを消す
         if (contact.bodyA.node?.name == "BLOCK"){
             contact.bodyA.node?.removeFromParent()
         }else if(contact.bodyB.node?.name == "BLOCK" ){
             contact.bodyB.node?.removeFromParent()
         }
+
+        //ブロックの数が0ならゲームクリア
+        print(self.blocks!.children.count)
+        if(self.blocks!.children.count <= 0){
+            self.gameClear()
+        }
+    }
+
+    //ゲームクリア
+    func gameClear(){
+        print("GAME CLEAR!")
+    }
+
+    //ゲームオーバー
+    func gameOver(){
+        print("GAME OVER")
     }
 }
