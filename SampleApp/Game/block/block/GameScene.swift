@@ -17,24 +17,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var fire : SKEmitterNode?
     private var ball : SKSpriteNode?
     private var blocks : SKNode?
+    private var endFlg : Bool?
+    private var node : SKEmitterNode?
 
     override func didMove(to view: SKView) {
+
+        //プレイヤー爆発 & 削除
+        self.node = SKEmitterNode(fileNamed: "MyParticle")
+        self.node?.isHidden = true
+        addChild(self.node!)
+
+
+        //ゲーム終了フラグ（true:終了 false:プレイ中）
+        self.endFlg = false
+
         //衝突判定のdelegate
         self.physicsWorld.contactDelegate = self
 
 
         //ブロックを配置しているノードを取得
-        self.blocks = self.childNode(withName: "//BLOCKS") as? SKNode
+        self.blocks = self.childNode(withName: "//BLOCKS")
 
 
-        // Get label node from scene and store it for use later
+        //ラベル
         self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }
-        
-        
+        self.label?.isHidden = true
+
+        //プレイヤー
         self.player = self.childNode(withName: "//PLAYER") as? SKSpriteNode
 
 
@@ -42,18 +51,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.ball = self.childNode(withName: "//BALL") as? SKSpriteNode
         self.ball?.physicsBody?.applyImpulse(vector)
 
-        //self.player!.physicsBody?.contactTestBitMask = self.ball!.physicsBody!.categoryBitMask
-
-
-        //self.player?.run(SKAction.init(named: "rectAnim")!, withKey: "fadeInOut")
-
-       // let emitter = SKEmitterNode(fileNamed: "fire")!
-//        if let node = SKEmitterNode(fileNamed: "MyParticle") {
-//            node.position.x = 100;
-//            node.position.y = 100;
-//            addChild(node)
-//        }
-//
         // Create shape node to use during mouse interaction
         let w = (self.size.width + self.size.height) * 0.05
         self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
@@ -94,6 +91,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //ゲームオーバーの時にタップしたらゲーム再開
+        if(endFlg == true){
+            backToStart()
+        }
+
         for t in touches {
             //プレイヤーのxの位置を指の位置にする
             self.player?.position.x = t.location(in: self).x
@@ -125,8 +127,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         //ゲームオーバー判定
         if( CGFloat((self.ball?.position.y)!) < CGFloat((self.player?.position.y)!)){
-            self.ball?.removeFromParent();
-            self.gameOver();
+            self.gameEnd(message: "GAME OVER");
         }
     }
 
@@ -141,18 +142,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         //ブロックの数が0ならゲームクリア
         print(self.blocks!.children.count)
-        if(self.blocks!.children.count <= 0){
-            self.gameClear()
+        if(self.blocks!.children.count <= 23){
+            self.gameEnd(message: "GAME CLEAR")
         }
     }
 
-    //ゲームクリア
-    func gameClear(){
-        print("GAME CLEAR!")
+    //ゲーム終了
+    func gameEnd(message:String){
+        print("GAME CLEAR or Game OVER")
+        print(self.ball?.position.y)
+
+        //ボールを削除
+        self.ball?.removeFromParent()
+
+
+        //プレイヤー爆発
+        self.node!.isHidden = false;
+        self.player?.removeFromParent()
+
+
+        //endFlgをTrueにする
+        self.endFlg = true
+
+        //Label表示
+        self.label?.isHidden = false
+        self.label?.text = message
     }
 
-    //ゲームオーバー
-    func gameOver(){
-        print("GAME OVER")
+    //シーン遷移
+    func backToStart(){
+
+        //同じGameSceneを開き直す
+        let transition = SKTransition.fade(withDuration: 2.0)
+        //GameScene.swiftを読み込み
+        let scene = GameScene(fileNamed: "GameScene")
+        //Sceneを画面いっぱいに表示設定
+        scene!.scaleMode = .aspectFill
+        //遷移実行
+        self.view!.presentScene(scene!, transition:transition)
     }
 }
