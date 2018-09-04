@@ -161,6 +161,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.player?.removeFromParent()
 
 
+        
         //endFlgをTrueにする
         self.endFlg = true
 
