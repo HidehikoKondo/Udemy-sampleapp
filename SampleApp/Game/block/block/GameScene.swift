@@ -18,15 +18,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var ball : SKSpriteNode?
     private var blocks : SKNode?
     private var endFlg : Bool?
-    private var node : SKEmitterNode?
 
     override func didMove(to view: SKView) {
-
-        //プレイヤー爆発 & 削除
-        self.node = SKEmitterNode(fileNamed: "MyParticle")
-        self.node?.isHidden = true
-        addChild(self.node!)
-
 
         //ゲーム終了フラグ（true:終了 false:プレイ中）
         self.endFlg = false
@@ -127,7 +120,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         //ゲームオーバー判定
         if( CGFloat((self.ball?.position.y)!) < CGFloat((self.player?.position.y)!)){
-            self.gameEnd(message: "GAME OVER");
+            if(endFlg == false){
+                self.gameEnd(message: "GAME OVER");
+            }
         }
     }
 
@@ -135,29 +130,52 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         //BLOCKに何かがぶつかったらブロックを消す
         if (contact.bodyA.node?.name == "BLOCK"){
+            //ブロックを消す
             contact.bodyA.node?.removeFromParent()
+            //パーティクル
+            starParticle(node: contact.bodyA.node!)
         }else if(contact.bodyB.node?.name == "BLOCK" ){
+            //ブロックを消す
             contact.bodyB.node?.removeFromParent()
+            //パーティクル
+            starParticle(node: contact.bodyB.node!)
         }
 
         //ブロックの数が0ならゲームクリア
         print(self.blocks!.children.count)
-        if(self.blocks!.children.count <= 23){
+        if(self.blocks!.children.count <= 0){
             self.gameEnd(message: "GAME CLEAR")
         }
     }
 
+    
+    //星のパーティクル
+    func starParticle(node:SKNode){
+        //プレイヤー爆発 & 削除
+        let star = SKEmitterNode(fileNamed: "Star")
+        star?.position.x = node.position.x
+        star?.position.y = node.position.y
+        self.blocks?.addChild(star!)
+    }
+    
     //ゲーム終了
     func gameEnd(message:String){
         print("GAME CLEAR or Game OVER")
         print(self.ball?.position.y)
 
+        //プレイヤー爆発 & 削除
+        let fire = SKEmitterNode(fileNamed: "MyParticle")
+        fire?.position.x = (player?.position.x)!
+        fire?.position.y = (player?.position.y)!
+        addChild(fire!)
+
+        
+        
         //ボールを削除
         self.ball?.removeFromParent()
 
 
         //プレイヤー爆発
-        self.node!.isHidden = false;
         self.player?.removeFromParent()
 
 
