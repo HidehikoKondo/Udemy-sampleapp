@@ -34,7 +34,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         //ラベル
         self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        self.label?.isHidden = true
 
         //プレイヤー
         self.player = self.childNode(withName: "//PLAYER") as? SKSpriteNode
@@ -121,7 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //ゲームオーバー判定
         if( CGFloat((self.ball?.position.y)!) < CGFloat((self.player?.position.y)!)){
             if(endFlg == false){
-                self.gameEnd(message: "GAME OVER");
+                self.gameOver()
             }
         }
     }
@@ -143,8 +142,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         //ブロックの数が0ならゲームクリア
         print(self.blocks!.children.count)
-        if(self.blocks!.children.count <= 0){
-            self.gameEnd(message: "GAME CLEAR")
+        if(self.blocks!.children.count <= 24){
+            self.gameClear()
         }
     }
 
@@ -155,37 +154,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let star = SKEmitterNode(fileNamed: "Star")
         star?.position.x = node.position.x
         star?.position.y = node.position.y
-        self.blocks?.addChild(star!)
+        addChild(star!)
     }
     
-    //ゲーム終了
-    func gameEnd(message:String){
-        print("GAME CLEAR or Game OVER")
-        print(self.ball?.position.y)
+    //ゲームクリア
+    func gameClear(){
+        
+        //ボールを削除
+        self.ball?.removeFromParent()
+        
+        //endFlgをTrueにする
+        self.endFlg = true
+        
+        //Label表示
+        self.label?.text = "GAME CLEAR"
+        self.label?.run(SKAction(named: "GAMEOVER")!)
+    }
 
+    //ゲームオーバー
+    func gameOver(){
         //プレイヤー爆発 & 削除
         let fire = SKEmitterNode(fileNamed: "MyParticle")
         fire?.position.x = (player?.position.x)!
         fire?.position.y = (player?.position.y)!
         addChild(fire!)
 
-        
-        
         //ボールを削除
         self.ball?.removeFromParent()
 
-
         //プレイヤー爆発
         self.player?.removeFromParent()
-
-
         
         //endFlgをTrueにする
         self.endFlg = true
 
         //Label表示
-        self.label?.isHidden = false
-        self.label?.text = message
+        self.label?.text = "GAME OVER"
+        self.label?.run(SKAction(named: "GAMEOVER")!)
     }
 
     //シーン遷移
