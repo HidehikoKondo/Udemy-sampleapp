@@ -17,6 +17,7 @@
 		06273D7C2132D6EA006DC19D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06273D7A2132D6EA006DC19D /* LaunchScreen.storyboard */; };
 		06273D842132DDB0006DC19D /* MyParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 06273D832132DDB0006DC19D /* MyParticle.sks */; };
 		9A7691BA213E8244007D0CCD /* Star.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9A7691B9213E8243007D0CCD /* Star.sks */; };
+		9AAFDAAB214120FB0086663E /* hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9AAFDAAA214120FB0086663E /* hit.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		06273D7D2132D6EA006DC19D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06273D832132DDB0006DC19D /* MyParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyParticle.sks; sourceTree = "<group>"; };
 		9A7691B9213E8243007D0CCD /* Star.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Star.sks; sourceTree = "<group>"; };
+		9AAFDAAA214120FB0086663E /* hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hit.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 		06273D6A2132D6E8006DC19D /* block */ = {
 			isa = PBXGroup;
 			children = (
+				9AAFDAAA214120FB0086663E /* hit.mp3 */,
 				9A7691B9213E8243007D0CCD /* Star.sks */,
 				06273D6B2132D6E8006DC19D /* AppDelegate.swift */,
 				06273D6D2132D6E8006DC19D /* GameScene.sks */,
@@ -139,6 +142,7 @@
 			files = (
 				06273D772132D6E8006DC19D /* Main.storyboard in Resources */,
 				06273D842132DDB0006DC19D /* MyParticle.sks in Resources */,
+				9AAFDAAB214120FB0086663E /* hit.mp3 in Resources */,
 				06273D6E2132D6E8006DC19D /* GameScene.sks in Resources */,
 				06273D792132D6EA006DC19D /* Assets.xcassets in Resources */,
 				9A7691BA213E8244007D0CCD /* Star.sks in Resources */,

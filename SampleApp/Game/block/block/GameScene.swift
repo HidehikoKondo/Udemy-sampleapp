@@ -20,17 +20,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var endFlg : Bool?
 
     override func didMove(to view: SKView) {
-
         //ゲーム終了フラグ（true:終了 false:プレイ中）
         self.endFlg = false
 
         //衝突判定のdelegate
         self.physicsWorld.contactDelegate = self
 
-
         //ブロックを配置しているノードを取得
         self.blocks = self.childNode(withName: "//BLOCKS")
-
 
         //ラベル
         self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
@@ -38,50 +35,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //プレイヤー
         self.player = self.childNode(withName: "//PLAYER") as? SKSpriteNode
 
-
+        //ボール移動
         let vector = CGVector(dx: 5, dy: -10)
         self.ball = self.childNode(withName: "//BALL") as? SKSpriteNode
         self.ball?.physicsBody?.applyImpulse(vector)
+    }
 
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
-        
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
-    }
-    
-    
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //ゲームオーバーの時にタップしたらゲーム再開
         if(endFlg == true){
@@ -142,7 +101,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         //ブロックの数が0ならゲームクリア
         print(self.blocks!.children.count)
-        if(self.blocks!.children.count <= 24){
+        if(self.blocks!.children.count <= 0){
             self.gameClear()
         }
     }
@@ -155,11 +114,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         star?.position.x = node.position.x
         star?.position.y = node.position.y
         addChild(star!)
+
+        //効果音再生Action
+        let seAction:SKAction = SKAction(named: "HIT")!
+        //待ちAction
+        let waitAction:SKAction = SKAction.wait(forDuration: 1)
+        //オブジェクトの削除Action
+        let removeAction:SKAction = SKAction.removeFromParent()
+        //シーケンス
+        let sequence:SKAction = SKAction.sequence([seAction, waitAction, removeAction])
+        //Action実行
+        star?.run(sequence)
     }
     
     //ゲームクリア
     func gameClear(){
-        
         //ボールを削除
         self.ball?.removeFromParent()
         
@@ -195,7 +164,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     //シーン遷移
     func backToStart(){
-
         //同じGameSceneを開き直す
         let transition = SKTransition.fade(withDuration: 2.0)
         //GameScene.swiftを読み込み
