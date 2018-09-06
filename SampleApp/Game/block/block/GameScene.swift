@@ -107,7 +107,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //星のパーティクル
     func starParticle(node:SKNode){
         //プレイヤー爆発 & 削除
-        let star = SKEmitterNode(fileNamed: "Star")
+        let star = SKEmitterNode(fileNamed: "star")
         star?.position.x = node.position.x
         star?.position.y = node.position.y
         addChild(star!)
@@ -135,12 +135,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Label表示
         self.label?.text = "GAME CLEAR"
         self.label?.run(SKAction(named: "GAMEOVER")!)
+        
+        //ステージクリアのパーティクル
+        let clear = SKEmitterNode(fileNamed: "clear")
+        clear?.position.x = 0
+        clear?.position.y = 700
+        addChild(clear!)
     }
 
     //ゲームオーバー
     func gameOver(){
         //プレイヤー爆発 & 削除
-        let fire = SKEmitterNode(fileNamed: "MyParticle")
+        let fire = SKEmitterNode(fileNamed: "explosion")
         fire?.position.x = (player?.position.x)!
         fire?.position.y = (player?.position.y)!
         addChild(fire!)
@@ -157,6 +163,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Label表示
         self.label?.text = "GAME OVER"
         self.label?.run(SKAction(named: "GAMEOVER")!)
+        
+        //効果音再生Action
+        let seAction:SKAction = SKAction(named: "EXPLOSION")!
+        self.run(seAction)
     }
 
     //シーン遷移
