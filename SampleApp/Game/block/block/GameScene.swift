@@ -74,14 +74,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Called before each frame is rendered
 
         //ゲームオーバー判定
-        if( CGFloat((self.ball?.position.y)!) < CGFloat((self.player?.position.y)!)){
+        if( CGFloat((self.ball?.position.y)!) < -700){
             if(endFlg == false){
                 self.gameOver()
             }
         }
     }
 
-    //ボールとブロックの衝突発生時の処理
+    //ボールとブロックの衝突時の処理
     func didBegin(_ contact: SKPhysicsContact) {
         //BLOCKに何かがぶつかったらブロックを消す
         if (contact.bodyA.node?.name == "BLOCK"){
@@ -97,7 +97,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
 
         //ブロックの数が0ならゲームクリア
-        print(self.blocks!.children.count)
         if(self.blocks!.children.count <= 0){
             self.gameClear()
         }
