@@ -12,9 +12,7 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
     private var player : SKSpriteNode?
-    private var fire : SKEmitterNode?
     private var ball : SKSpriteNode?
     private var blocks : SKNode?
     private var endFlg : Bool?
@@ -48,19 +46,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
 
         for t in touches {
+            //タップ位置をログに出す
+            print( t.location(in: self).x)
+
             //プレイヤーのxの位置を指の位置にする
             self.player?.position.x = t.location(in: self).x
-            print( t.location(in: self).x)
         }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
-            //self.touchMoved(toPoint: t.location(in: self))
-            
             //プレイヤーのxの位置を指の位置にする
             self.player?.position.x = t.location(in: self).x
-            print( t.location(in: self).x)
         }
     }
     
