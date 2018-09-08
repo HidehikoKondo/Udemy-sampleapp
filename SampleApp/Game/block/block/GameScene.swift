@@ -15,11 +15,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var player : SKSpriteNode?
     private var ball : SKSpriteNode?
     private var blocks : SKNode?
-    private var endFlg : Bool?
+    private var gameStatus : String?
 
     override func didMove(to view: SKView) {
-        //ゲーム終了フラグ（true:終了 false:プレイ中）
-        self.endFlg = false
+        //ゲームステータス（"START"：ゲームスタート　"PLAY"：プレイ中  "END"：ゲームオーバー・クリア）
+        self.gameStatus = "START"
 
         //衝突判定のdelegate
         self.physicsWorld.contactDelegate = self
@@ -33,15 +33,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //プレイヤー
         self.player = self.childNode(withName: "//PLAYER") as? SKSpriteNode
 
-        //ボール移動
-        let vector = CGVector(dx: 5, dy: -10)
+        //ボール
         self.ball = self.childNode(withName: "//BALL") as? SKSpriteNode
-        self.ball?.physicsBody?.applyImpulse(vector)
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //ゲームオーバーの時にタップしたらゲーム再開
-        if(endFlg == true){
+        //ゲームステータスに応じたタップ動作設定
+        if(self.gameStatus == "START"){
+            gameStart();
+        }else if(self.gameStatus == "END"){
             backToStart()
         }
 
@@ -75,7 +75,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         //ゲームオーバー判定
         if( CGFloat((self.ball?.position.y)!) < -700){
-            if(endFlg == false){
+            if(self.gameStatus != "END"){
                 self.gameOver()
             }
         }
@@ -101,7 +101,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.gameClear()
         }
     }
-
     
     //星のパーティクル
     func starParticle(node:SKNode){
@@ -123,13 +122,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         star?.run(sequence)
     }
     
+    //ゲームスタート
+    func gameStart(){
+        //ゲームステータスをプレイ中にする
+        self.gameStatus = "PLAY"
+        
+        //タイトルラベルを移動
+        self.label?.run(SKAction(named: "GAMESTART")!)
+        
+        //スタート処理（ボールを動かす）
+        let vector = CGVector(dx: 5, dy: -10)
+        self.ball?.physicsBody?.applyImpulse(vector)
+    }
+    
     //ゲームクリア
     func gameClear(){
         //ボールを削除
         self.ball?.removeFromParent()
         
-        //endFlgをTrueにする
-        self.endFlg = true
+        //ゲームステータスをゲームオーバー・クリアにする
+        self.gameStatus = "END"
         
         //Label表示
         self.label?.text = "GAME CLEAR"
@@ -156,8 +168,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //プレイヤー爆発
         self.player?.removeFromParent()
         
-        //endFlgをTrueにする
-        self.endFlg = true
+        //ゲームステータスをゲームオーバー・クリアにする
+        self.gameStatus = "END"
 
         //Label表示
         self.label?.text = "GAME OVER"
