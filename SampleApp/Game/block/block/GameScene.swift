@@ -26,15 +26,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         //ブロックを配置しているノードを取得
         self.blocks = self.childNode(withName: "//BLOCKS")
+        
 
         //ラベル
         self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
 
         //プレイヤー
         self.player = self.childNode(withName: "//PLAYER") as? SKSpriteNode
-
+        self.player!.physicsBody?.usesPreciseCollisionDetection = true
         //ボール
         self.ball = self.childNode(withName: "//BALL") as? SKSpriteNode
+        self.ball!.physicsBody?.usesPreciseCollisionDetection = true
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -131,7 +133,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.label?.run(SKAction(named: "GAMESTART")!)
         
         //スタート処理（ボールを動かす）
-        let vector = CGVector(dx: 5, dy: -10)
+        let vector = CGVector(dx: 15, dy: -15)
         self.ball?.physicsBody?.applyImpulse(vector)
     }
     
