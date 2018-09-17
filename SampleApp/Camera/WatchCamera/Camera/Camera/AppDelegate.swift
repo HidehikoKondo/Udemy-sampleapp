@@ -7,9 +7,27 @@
 //
 
 import UIKit
+import WatchConnectivity
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        print("...session...")
+    }
+    
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        print("...sessionDidBecomeInactive...")
+    }
+    
+    func sessionDidDeactivate(_ session: WCSession) {
+        print("...sessionDidDeactivate...")
+
+    }
+    
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+        print("...didReceiveApplicationContext...")
+    }
+    
 
     var window: UIWindow?
 

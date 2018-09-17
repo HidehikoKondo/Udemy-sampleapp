@@ -55,11 +55,21 @@ class InterfaceController: WKInterfaceController,WCSessionDelegate {
     
     
     func submit(){
-        do {
-            try session.updateApplicationContext(["message":"shutter"])
-            print("try send")
-        } catch {
-            print("error")
+        if  self.session.isReachable {
+            do {
+//                try session.updateApplicationContext(["message":"shutter"])
+//                print("try send")
+                self.session.sendMessage(["message":"shutter"], replyHandler: { (replyMessage) -> Void in
+                    print ("receive from apple watch","test");
+                }) { (error) -> Void in
+                    print(error)
+                }
+                
+            } catch {
+                print("error")
+            }
+        }else{
+            print("not reachable")
         }
     }
         

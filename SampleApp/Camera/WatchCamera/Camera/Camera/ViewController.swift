@@ -17,11 +17,11 @@ import WatchConnectivity
 class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDelegate {
     @IBOutlet weak var label: UILabel!
     
-    func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
-        
-        // 受信したメッセージ
-        self.label.text = ("receiveMessage::\(message)")
-        print("received")
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
+        print(message)
+        self.label.text = (message["message"] as! String)
+        speak();
+
     }
     
     
@@ -40,6 +40,12 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
         self.label.text = "sessionDidDeactivate"
     }
     
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+        print("---didReceiveApplicationContext---")
+        self.label.text = "didReceiveApplicationContext"
+    }
+
+    
     //変数
     var cameraType: Bool = true
     var captureSession: AVCaptureSession!
@@ -53,6 +59,9 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
     //おしゃべり機能
     var speech = AVSpeechSynthesizer()
     
+    //Watchsession
+    var session = WCSession.default;
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,10 +75,9 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
         
         
         // Watch Connectivity サポートチェック
-        if WCSession.isSupported() {
-            let session = WCSession.default
-            session.delegate = self
-            session.activate()
+        if (WCSession.isSupported()) {
+            self.session.delegate = self
+            self.session.activate()
         }
     }
 
@@ -155,7 +163,11 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
         self.cameraConnection(type: cameraType)
     }
     
-    @IBAction func speech(_ sender: Any){
+    @IBAction func takePhotoButton(_ sender: Any){
+        speak()
+    }
+    
+    func speak(){
         let utterance = AVSpeechUtterance(string:"はい！チーズ")
         utterance.voice = AVSpeechSynthesisVoice(language: "ja-JP")
         utterance.rate = AVSpeechUtteranceDefaultSpeechRate

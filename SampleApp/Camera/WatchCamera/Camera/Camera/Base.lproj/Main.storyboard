@@ -37,7 +37,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="Button_TakePhoto"/>
                                 <connections>
-                                    <action selector="speech:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TqC-xl-deo"/>
+                                    <action selector="takePhotoButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="f6C-SN-HtU"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xs3-eb-2Jr">
