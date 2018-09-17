@@ -12,7 +12,56 @@
 		060469A5213165930035F5DB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 060469A3213165930035F5DB /* Main.storyboard */; };
 		060469A7213165950035F5DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 060469A6213165950035F5DB /* Assets.xcassets */; };
 		060469AA213165950035F5DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 060469A8213165950035F5DB /* LaunchScreen.storyboard */; };
+		06F564C7214F60F400100957 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06F564C5214F60F400100957 /* Interface.storyboard */; };
+		06F564C9214F60F600100957 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06F564C8214F60F600100957 /* Assets.xcassets */; };
+		06F564D0214F60F600100957 /* CameraWatch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 06F564CF214F60F600100957 /* CameraWatch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		06F564D5214F60F600100957 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F564D4214F60F600100957 /* InterfaceController.swift */; };
+		06F564D7214F60F600100957 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F564D6214F60F600100957 /* ExtensionDelegate.swift */; };
+		06F564D9214F60F700100957 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06F564D8214F60F700100957 /* Assets.xcassets */; };
+		06F564DD214F60F700100957 /* CameraWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 06F564C3214F60F400100957 /* CameraWatch.app */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		06F564D1214F60F600100957 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06046994213165930035F5DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 06F564CE214F60F600100957;
+			remoteInfo = "CameraWatch Extension";
+		};
+		06F564DB214F60F700100957 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06046994213165930035F5DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 06F564C2214F60F400100957;
+			remoteInfo = CameraWatch;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		06F564E3214F60F700100957 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				06F564D0214F60F600100957 /* CameraWatch Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		06F564E5214F60F700100957 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				06F564DD214F60F700100957 /* CameraWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0604699C213165930035F5DB /* Camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Camera.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -22,10 +71,26 @@
 		060469A6213165950035F5DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		060469A9213165950035F5DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		060469AB213165950035F5DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		06F564C3214F60F400100957 /* CameraWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CameraWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		06F564C6214F60F400100957 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		06F564C8214F60F600100957 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		06F564CA214F60F600100957 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		06F564CF214F60F600100957 /* CameraWatch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "CameraWatch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		06F564D4214F60F600100957 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		06F564D6214F60F600100957 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		06F564D8214F60F700100957 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		06F564DA214F60F700100957 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		06046999213165930035F5DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		06F564CC214F60F600100957 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -39,6 +104,8 @@
 			isa = PBXGroup;
 			children = (
 				0604699E213165930035F5DB /* Camera */,
+				06F564C4214F60F400100957 /* CameraWatch */,
+				06F564D3214F60F600100957 /* CameraWatch Extension */,
 				0604699D213165930035F5DB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -47,6 +114,8 @@
 			isa = PBXGroup;
 			children = (
 				0604699C213165930035F5DB /* Camera.app */,
+				06F564C3214F60F400100957 /* CameraWatch.app */,
+				06F564CF214F60F600100957 /* CameraWatch Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -64,6 +133,27 @@
 			path = Camera;
 			sourceTree = "<group>";
 		};
+		06F564C4214F60F400100957 /* CameraWatch */ = {
+			isa = PBXGroup;
+			children = (
+				06F564C5214F60F400100957 /* Interface.storyboard */,
+				06F564C8214F60F600100957 /* Assets.xcassets */,
+				06F564CA214F60F600100957 /* Info.plist */,
+			);
+			path = CameraWatch;
+			sourceTree = "<group>";
+		};
+		06F564D3214F60F600100957 /* CameraWatch Extension */ = {
+			isa = PBXGroup;
+			children = (
+				06F564D4214F60F600100957 /* InterfaceController.swift */,
+				06F564D6214F60F600100957 /* ExtensionDelegate.swift */,
+				06F564D8214F60F700100957 /* Assets.xcassets */,
+				06F564DA214F60F700100957 /* Info.plist */,
+			);
+			path = "CameraWatch Extension";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,15 +164,51 @@
 				06046998213165930035F5DB /* Sources */,
 				06046999213165930035F5DB /* Frameworks */,
 				0604699A213165930035F5DB /* Resources */,
+				06F564E5214F60F700100957 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				06F564DC214F60F700100957 /* PBXTargetDependency */,
 			);
 			name = Camera;
 			productName = Camera;
 			productReference = 0604699C213165930035F5DB /* Camera.app */;
 			productType = "com.apple.product-type.application";
+		};
+		06F564C2214F60F400100957 /* CameraWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 06F564E4214F60F700100957 /* Build configuration list for PBXNativeTarget "CameraWatch" */;
+			buildPhases = (
+				06F564C1214F60F400100957 /* Resources */,
+				06F564E3214F60F700100957 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				06F564D2214F60F600100957 /* PBXTargetDependency */,
+			);
+			name = CameraWatch;
+			productName = CameraWatch;
+			productReference = 06F564C3214F60F400100957 /* CameraWatch.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		06F564CE214F60F600100957 /* CameraWatch Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 06F564E2214F60F700100957 /* Build configuration list for PBXNativeTarget "CameraWatch Extension" */;
+			buildPhases = (
+				06F564CB214F60F600100957 /* Sources */,
+				06F564CC214F60F600100957 /* Frameworks */,
+				06F564CD214F60F600100957 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CameraWatch Extension";
+			productName = "CameraWatch Extension";
+			productReference = 06F564CF214F60F600100957 /* CameraWatch Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -95,6 +221,12 @@
 				ORGANIZATIONNAME = UDONKONET;
 				TargetAttributes = {
 					0604699B213165930035F5DB = {
+						CreatedOnToolsVersion = 10.0;
+					};
+					06F564C2214F60F400100957 = {
+						CreatedOnToolsVersion = 10.0;
+					};
+					06F564CE214F60F600100957 = {
 						CreatedOnToolsVersion = 10.0;
 					};
 				};
@@ -113,6 +245,8 @@
 			projectRoot = "";
 			targets = (
 				0604699B213165930035F5DB /* Camera */,
+				06F564C2214F60F400100957 /* CameraWatch */,
+				06F564CE214F60F600100957 /* CameraWatch Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -128,6 +262,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		06F564C1214F60F400100957 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06F564C9214F60F600100957 /* Assets.xcassets in Resources */,
+				06F564C7214F60F400100957 /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		06F564CD214F60F600100957 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06F564D9214F60F700100957 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -140,7 +291,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		06F564CB214F60F600100957 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06F564D7214F60F600100957 /* ExtensionDelegate.swift in Sources */,
+				06F564D5214F60F600100957 /* InterfaceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		06F564D2214F60F600100957 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 06F564CE214F60F600100957 /* CameraWatch Extension */;
+			targetProxy = 06F564D1214F60F600100957 /* PBXContainerItemProxy */;
+		};
+		06F564DC214F60F700100957 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 06F564C2214F60F400100957 /* CameraWatch */;
+			targetProxy = 06F564DB214F60F700100957 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		060469A3213165930035F5DB /* Main.storyboard */ = {
@@ -157,6 +330,14 @@
 				060469A9213165950035F5DB /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		06F564C5214F60F400100957 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				06F564C6214F60F400100957 /* Base */,
+			);
+			name = Interface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -285,7 +466,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7JKB5AMAKP;
 				INFOPLIST_FILE = Camera/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -304,7 +485,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7JKB5AMAKP;
 				INFOPLIST_FILE = Camera/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -313,6 +494,88 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		06F564DE214F60F700100957 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7JKB5AMAKP;
+				IBSC_MODULE = CameraWatch_Extension;
+				INFOPLIST_FILE = CameraWatch/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = net.udonko.Camera.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 5.0;
+			};
+			name = Debug;
+		};
+		06F564DF214F60F700100957 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7JKB5AMAKP;
+				IBSC_MODULE = CameraWatch_Extension;
+				INFOPLIST_FILE = CameraWatch/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = net.udonko.Camera.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 5.0;
+			};
+			name = Release;
+		};
+		06F564E0214F60F700100957 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7JKB5AMAKP;
+				INFOPLIST_FILE = "CameraWatch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.udonko.Camera.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 5.0;
+			};
+			name = Debug;
+		};
+		06F564E1214F60F700100957 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7JKB5AMAKP;
+				INFOPLIST_FILE = "CameraWatch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.udonko.Camera.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 5.0;
 			};
 			name = Release;
 		};
@@ -333,6 +596,24 @@
 			buildConfigurations = (
 				060469AF213165950035F5DB /* Debug */,
 				060469B0213165950035F5DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		06F564E2214F60F700100957 /* Build configuration list for PBXNativeTarget "CameraWatch Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				06F564E0214F60F700100957 /* Debug */,
+				06F564E1214F60F700100957 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		06F564E4214F60F700100957 /* Build configuration list for PBXNativeTarget "CameraWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				06F564DE214F60F700100957 /* Debug */,
+				06F564DF214F60F700100957 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

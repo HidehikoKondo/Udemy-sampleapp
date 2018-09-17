@@ -10,8 +10,36 @@ import UIKit
 import ImageIO
 import AVFoundation
 
+//追加
+import WatchConnectivity
 
-class ViewController: UIViewController, AVSpeechSynthesizerDelegate {
+
+class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDelegate {
+    @IBOutlet weak var label: UILabel!
+    
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
+        
+        // 受信したメッセージ
+        self.label.text = ("receiveMessage::\(message)")
+        print("received")
+    }
+    
+    
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        print("---session---")
+        self.label.text = "session"
+    }
+    
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        print("---sessionDidBecomeInactive---")
+        self.label.text = "sessionDidBecomeInactive"
+    }
+    
+    func sessionDidDeactivate(_ session: WCSession) {
+        print("---sessionDidDeactivate---")
+        self.label.text = "sessionDidDeactivate"
+    }
+    
     //変数
     var cameraType: Bool = true
     var captureSession: AVCaptureSession!
@@ -35,6 +63,14 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate {
         
         //おしゃべり機能
         self.speech.delegate = self;
+        
+        
+        // Watch Connectivity サポートチェック
+        if WCSession.isSupported() {
+            let session = WCSession.default
+            session.delegate = self
+            session.activate()
+        }
     }
 
     //おしゃべり機能
