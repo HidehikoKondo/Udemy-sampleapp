@@ -11,7 +11,7 @@ import ImageIO
 import AVFoundation
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, AVSpeechSynthesizerDelegate {
     //変数
     var cameraType: Bool = true
     var captureSession: AVCaptureSession!
@@ -22,14 +22,35 @@ class ViewController: UIViewController {
     //Outlet
     @IBOutlet weak var cameraView: UIView!
     
+    //おしゃべり機能
+    var speech = AVSpeechSynthesizer()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
         //1
         self.cameraConnection(type: cameraType)
+        
+        //おしゃべり機能
+        self.speech.delegate = self;
     }
 
+    //おしゃべり機能
+    //読み上げ開始時に呼び出し
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance)
+    {
+        print("読み上げ開始")
+    }
+
+    //読み上げ終了時に呼び出し
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance)
+    {
+        print("読み上げ終了。写真撮影処理へ")
+        self.takePhoto()
+    }
+    
     func cameraConnection(type: Bool){
         //シミュレータだったら何もしない
         if(TARGET_OS_SIMULATOR != 0){
@@ -98,7 +119,15 @@ class ViewController: UIViewController {
         self.cameraConnection(type: cameraType)
     }
     
-    @IBAction func takePhoto(_ sender: Any) {
+    @IBAction func speech(_ sender: Any){
+        let utterance = AVSpeechUtterance(string:"はい！チーズ")
+        utterance.voice = AVSpeechSynthesisVoice(language: "ja-JP")
+        utterance.rate = AVSpeechUtteranceDefaultSpeechRate
+        utterance.pitchMultiplier = 1.0
+        self.speech.speak(utterance)
+    }
+    
+    func takePhoto() {
         //シミュレータだったら何もしない
         if(TARGET_OS_SIMULATOR != 0){
             return
