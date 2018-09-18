@@ -37,7 +37,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="Button_TakePhoto"/>
                                 <connections>
-                                    <action selector="changeCameraButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E2c-i0-Dt8"/>
+                                    <action selector="takePhotoButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="r3b-gl-1M1"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xs3-eb-2Jr">
@@ -45,7 +45,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="Button_ChangeCam"/>
                                 <connections>
-                                    <action selector="changeCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="T1N-c3-aa4"/>
+                                    <action selector="changeCameraButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fem-a2-vpn"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r5T-aK-91U">

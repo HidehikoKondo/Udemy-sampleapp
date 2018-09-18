@@ -14,7 +14,7 @@ import ImageIO
 import WatchConnectivity
 
 
-class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDelegate {
+class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDelegate, AVCapturePhotoCaptureDelegate {
     // MARK: -変数宣言
     //Outlets
     @IBOutlet weak var cameraView: UIView!
@@ -22,9 +22,13 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
 
     //カメラ
     var cameraType: Bool = true
+
+//    var cameraDevices: AVCaptureDevice!
+//    var imageOutput: AVCaptureStillImageOutput!
+    
     var captureSession: AVCaptureSession!
-    var cameraDevices: AVCaptureDevice!
-    var imageOutput: AVCaptureStillImageOutput!
+    var photoOutput: AVCapturePhotoOutput!
+    
     var cameraImage: UIImage!
 
     //おしゃべり機能
@@ -52,52 +56,37 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
 
     // MARK: - カメラ関連
     func cameraConnection(type: Bool){
-        //セッションの作成
         captureSession = AVCaptureSession()
+        captureSession.sessionPreset = AVCaptureSession.Preset.hd1920x1080
+        photoOutput = AVCapturePhotoOutput()
+
+        let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)
+        let backCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .back)
         
-        //デバイス一覧の取得
-        let devices = AVCaptureDevice.devices()
+        var device:AVCaptureDevice?
+        if(type == true){
+            device = frontCamera
+        }else{
+            device = backCamera
+        }
         
-        //バックカメラをcameraDevicesに格納
-        for device in devices {
-            if(type == true){
-                if device.position == AVCaptureDevice.Position.front {
-                    cameraDevices = device as! AVCaptureDevice
-                }
-            }else{
-                if device.position == AVCaptureDevice.Position.back {
-                    cameraDevices = device as! AVCaptureDevice
+        do {
+            let input = try AVCaptureDeviceInput(device: device!)
+            if (captureSession.canAddInput(input)) {
+                captureSession.addInput(input)
+                if (captureSession.canAddOutput(photoOutput)) {
+                    captureSession.addOutput(photoOutput)
+                    captureSession.startRunning()
+                    let captureVideoLayer: AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer.init(session: captureSession)
+                    captureVideoLayer.frame = self.cameraView.bounds
+                    captureVideoLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                    self.cameraView.layer.addSublayer(captureVideoLayer)
                 }
             }
         }
-        
-        //バックカメラからVideoInputを取得
-        let videoInput: AVCaptureInput!
-        do {
-            videoInput = try AVCaptureDeviceInput.init(device: cameraDevices)
-        } catch {
-            videoInput = nil
+        catch {
+            print(error)
         }
-        
-        //セッションに追加
-        captureSession.addInput(videoInput)
-        
-        //出力先を生成
-        imageOutput = AVCaptureStillImageOutput()
-        
-        //セッションに追加
-        captureSession.addOutput(imageOutput)
-        
-        //画像を表示するレイヤーを生成
-        let captureVideoLayer: AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer.init(session: captureSession)
-        captureVideoLayer.frame = self.cameraView.bounds
-        captureVideoLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        
-        //Viewに追加
-        self.cameraView.layer.addSublayer(captureVideoLayer)
-        
-        //セッション開始
-        captureSession.startRunning()
     }
 
     //フロントカメラ・バックカメラの切り替え
@@ -112,24 +101,31 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
         self.cameraConnection(type: cameraType)
     }
 
-    
     func takePhoto() {
         //ボタンを無効
         self.disableButton()
         
-        //ビデオ出力に接続
-        let captureVideoConnection = imageOutput.connection(with: AVMediaType.video)
         
-        //接続から画像を取得
-        self.imageOutput.captureStillImageAsynchronously(from: captureVideoConnection!) { (imageDataBuffer, error) -> Void in
-            //取得したImageのDataBufferをJPEGを変換
-            let capturedImageData: NSData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataBuffer!)! as NSData
-            //JPEGからUIImageを作成
-            self.cameraImage = UIImage(data: capturedImageData as Data)!
-            
-            //カメラを止める
-            self.captureSession.stopRunning()
-            
+        let settingsForMonitoring = AVCapturePhotoSettings()
+        settingsForMonitoring.flashMode = .auto
+        settingsForMonitoring.isAutoStillImageStabilizationEnabled = true
+        settingsForMonitoring.isHighResolutionPhotoEnabled = false
+        photoOutput?.capturePhoto(with: settingsForMonitoring, delegate: self)
+        
+        
+        //ビデオ出力に接続
+//        let captureVideoConnection = photoOutput.connection(with: AVMediaType.video)
+//
+//        //接続から画像を取得
+//        self.imageOutput.captureStillImageAsynchronously(from: captureVideoConnection!) { (imageDataBuffer, error) -> Void in
+//            //取得したImageのDataBufferをJPEGを変換
+//            let capturedImageData: NSData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataBuffer!)! as NSData
+//            //JPEGからUIImageを作成
+//            self.cameraImage = UIImage(data: capturedImageData as Data)!
+//
+//            //カメラを止める
+//            self.captureSession.stopRunning()
+        
 //            //インカメのときだけ写真を反転させる
 //            if(self.cameraType){
 //                self.photoImage = cameraImage.flipHorizontal()
@@ -137,9 +133,27 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
 //                self.photoImage = cameraImage
 //            }
             
-        }
+//        }
     }
 
+    func photoOutput(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
+        
+        //カメラを止める
+        self.captureSession.stopRunning()
+
+        
+        if let photoSampleBuffer = photoSampleBuffer {
+            let photoData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: photoSampleBuffer, previewPhotoSampleBuffer: previewPhotoSampleBuffer)
+            //let image = UIImage(data: photoData!)
+            
+            //JPEGからUIImageを作成
+            self.cameraImage = UIImage(data: photoData!)
+            
+            
+    //        UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
+        }
+    }
+    
     @IBAction func reTakePhoto(_ sender: Any) {
         //セッション開始
         captureSession.startRunning()
