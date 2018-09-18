@@ -56,46 +56,14 @@ class InterfaceController: WKInterfaceController,WCSessionDelegate {
     
     func submit(){
         if  self.session.isReachable {
-            do {
-//                try session.updateApplicationContext(["message":"shutter"])
-//                print("try send")
-                self.session.sendMessage(["message":"shutter"], replyHandler: { (replyMessage) -> Void in
-                    print ("receive from apple watch","test");
-                }) { (error) -> Void in
-                    print(error)
-                }
-                
-            } catch {
-                print("error")
+            self.session.sendMessage(["message":"shutter"],replyHandler: {(replyMessage) -> Void in
+                print ("receive from apple watch","test");
+            }){(error) -> Void in
+                print(error)
             }
         }else{
             print("not reachable")
         }
     }
-        
-        
-        
-//        NSDictionary *applicationDict = @{@"message" : message};
-//        [[WCSession defaultSession] updateApplicationContext:applicationDict error:nil];
-//
-//
-//        if ([[WCSession defaultSession] isReachable]) {
-//            NSLog(@"繋がった");
-//            [[WCSession defaultSession] sendMessage:applicationDict
-//                replyHandler:^(NSDictionary *replyHandler) {
-//                // do something
-//                NSLog(@"送った/ %@",message);
-//                }
-//                errorHandler:^(NSError *error) {
-//                // do something
-//                NSLog(@"送れなかった・・・orz");
-//                }
-//            ];
-//        }else{
-//            NSLog(@"つながってないよ");
-//            [_textLabel setText:@"つながってないよ"];
-//
-//        }
-
-    }
+}
 

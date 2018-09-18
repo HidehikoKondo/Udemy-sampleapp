@@ -96,11 +96,6 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
     }
     
     func cameraConnection(type: Bool){
-        //シミュレータだったら何もしない
-        if(TARGET_OS_SIMULATOR != 0){
-            return
-        }
-        
         //セッションの作成
         captureSession = AVCaptureSession()
         
@@ -176,10 +171,6 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
     }
     
     func takePhoto() {
-        //シミュレータだったら何もしない
-        if(TARGET_OS_SIMULATOR != 0){
-            return
-        }
         //ボタンを無効
         self.disableButton()
         
