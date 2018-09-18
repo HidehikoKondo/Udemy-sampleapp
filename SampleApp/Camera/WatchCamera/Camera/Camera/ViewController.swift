@@ -7,73 +7,41 @@
 //
 
 import UIKit
-import ImageIO
 import AVFoundation
 
-//追加
+// MARK: 追加でimportするもの
+import ImageIO
 import WatchConnectivity
 
 
 class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDelegate {
+    // MARK: -変数宣言
+    //Outlets
+    @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var label: UILabel!
-    
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
-        print(message)
-        self.label.text = (message["message"] as! String)
-        speak();
 
-    }
-    
-    
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        print("---session---")
-        self.label.text = "session"
-    }
-    
-    func sessionDidBecomeInactive(_ session: WCSession) {
-        print("---sessionDidBecomeInactive---")
-        self.label.text = "sessionDidBecomeInactive"
-    }
-    
-    func sessionDidDeactivate(_ session: WCSession) {
-        print("---sessionDidDeactivate---")
-        self.label.text = "sessionDidDeactivate"
-    }
-    
-    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
-        print("---didReceiveApplicationContext---")
-        self.label.text = "didReceiveApplicationContext"
-    }
-
-    
-    //変数
+    //カメラ
     var cameraType: Bool = true
     var captureSession: AVCaptureSession!
     var cameraDevices: AVCaptureDevice!
     var imageOutput: AVCaptureStillImageOutput!
     var cameraImage: UIImage!
-    
-    //Outlet
-    @IBOutlet weak var cameraView: UIView!
-    
+
     //おしゃべり機能
     var speech = AVSpeechSynthesizer()
-    
-    //Watchsession
+
+    //Apple Watch
     var session = WCSession.default;
 
-    
+    //MARK: - ViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-
         //1
         self.cameraConnection(type: cameraType)
         
         //おしゃべり機能
         self.speech.delegate = self;
-        
-        
+
         // Watch Connectivity サポートチェック
         if (WCSession.isSupported()) {
             self.session.delegate = self
@@ -81,20 +49,8 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
         }
     }
 
-    //おしゃべり機能
-    //読み上げ開始時に呼び出し
-    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance)
-    {
-        print("読み上げ開始")
-    }
 
-    //読み上げ終了時に呼び出し
-    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance)
-    {
-        print("読み上げ終了。写真撮影処理へ")
-        self.takePhoto()
-    }
-    
+    // MARK: - カメラ関連
     func cameraConnection(type: Bool){
         //セッションの作成
         captureSession = AVCaptureSession()
@@ -142,33 +98,20 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
         
         //セッション開始
         captureSession.startRunning()
-        
     }
 
-    
-    //MARK: - カメラ関連
-    @IBAction func changeCamera(_ sender: Any) {
+    //フロントカメラ・バックカメラの切り替え
+    func changeCamera(){
         //いったんセッション切る
         captureSession.stopRunning()
-        
+
         //カメラタイプを反転
         cameraType = !cameraType
-        
+
         //再接続
         self.cameraConnection(type: cameraType)
     }
-    
-    @IBAction func takePhotoButton(_ sender: Any){
-        speak()
-    }
-    
-    func speak(){
-        let utterance = AVSpeechUtterance(string:"はい！チーズ")
-        utterance.voice = AVSpeechSynthesisVoice(language: "ja-JP")
-        utterance.rate = AVSpeechUtteranceDefaultSpeechRate
-        utterance.pitchMultiplier = 1.0
-        self.speech.speak(utterance)
-    }
+
     
     func takePhoto() {
         //ボタンを無効
@@ -207,41 +150,99 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
         // その中の UIImage を取得
         let targetImage = self.cameraImage
         
-        // UIImage の画像をカメラロールに画像を保存
+        // UIImage の画像をカメラロールに写真を保存
         UIImageWriteToSavedPhotosAlbum(targetImage!, self, #selector(self.showResultOfSaveImage(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
     @objc func showResultOfSaveImage(_ image: UIImage, didFinishSavingWithError error: NSError!, contextInfo: UnsafeMutableRawPointer) {
-        var title = "カメラロールに保存しました"
-        var message = "SNSのアイコンにして、診断結果をみんなにシェアしよう！(≧∀≦*)"
+        var title = "保存完了"
+        var message = "カメラロールに写真を保存しました"
         
         if error != nil {
-            title = "ｱﾚﾚ?>(○´∀｀○) "
-            message = "診断結果の保存に失敗しました"
+            title = "エラー"
+            message = "写真の保存に失敗しました"
         }
         
         alert(title: title, message: message)
     }
-    
-    //アラート
+
+    //MARK: - おしゃべり機能
+    func speak(){
+        let utterance = AVSpeechUtterance(string:"はい、チーズ")
+        utterance.voice = AVSpeechSynthesisVoice(language: "ja-JP")
+        utterance.rate = AVSpeechUtteranceDefaultSpeechRate
+        utterance.pitchMultiplier = 1.0
+        self.speech.speak(utterance)
+    }
+
+    //読み上げ開始時に呼び出し
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance)
+    {
+        print("読み上げ開始")
+    }
+
+    //読み上げ終了時に呼び出し
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance)
+    {
+        print("読み上げ終了")
+        self.takePhoto()
+    }
+
+
+    //MARK: - UI制御
+    @IBAction func changeCameraButton(_ sender: Any) {
+        changeCamera();
+    }
+
+    @IBAction func takePhotoButton(_ sender: Any){
+        speak()
+    }
+
+    //アラート表示
     func alert(title: String, message:String){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         // OKボタンを追加
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler:{(action:UIAlertAction!) -> Void in
-        }))
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler:{(action:UIAlertAction!) -> Void in }))
         
         // UIAlertController を表示
         self.present(alert, animated: true, completion: nil)
     }
 
-    
+    //ボタンの有効・無効の制御
     func disableButton(){
 //        self.shutterButton.isEnabled = false
 //        self.changeButton.isEnabled = false
 //        self.backButton.isEnabled = false
 //        self.indicatorView.isHidden = false
     }
-    
+
+    // MARK: - Apple Watch関連
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
+        print(message)
+        self.label.text = (message["message"] as! String)
+        speak();
+
+    }
+
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        print("---session---")
+        self.label.text = "session"
+    }
+
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        print("---sessionDidBecomeInactive---")
+        self.label.text = "sessionDidBecomeInactive"
+    }
+
+    func sessionDidDeactivate(_ session: WCSession) {
+        print("---sessionDidDeactivate---")
+        self.label.text = "sessionDidDeactivate"
+    }
+
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+        print("---didReceiveApplicationContext---")
+        self.label.text = "didReceiveApplicationContext"
+    }
 }
 
