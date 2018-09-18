@@ -136,22 +136,16 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
 //        }
     }
 
-    func photoOutput(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
-        
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+
         //カメラを止める
         self.captureSession.stopRunning()
 
+        let photoData = photo.fileDataRepresentation()
+            
+        //JPEGからUIImageを作成
+        self.cameraImage = UIImage(data: photoData!)
         
-        if let photoSampleBuffer = photoSampleBuffer {
-            let photoData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: photoSampleBuffer, previewPhotoSampleBuffer: previewPhotoSampleBuffer)
-            //let image = UIImage(data: photoData!)
-            
-            //JPEGからUIImageを作成
-            self.cameraImage = UIImage(data: photoData!)
-            
-            
-    //        UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
-        }
     }
     
     @IBAction func reTakePhoto(_ sender: Any) {
