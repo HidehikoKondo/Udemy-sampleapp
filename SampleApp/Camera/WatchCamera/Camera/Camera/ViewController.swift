@@ -18,7 +18,11 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
     // MARK: -変数宣言
     //Outlets
     @IBOutlet weak var cameraView: UIView!
-
+    @IBOutlet weak var takePhotoButton: UIButton!
+    @IBOutlet weak var changeCameraButton: UIButton!
+    @IBOutlet weak var savePhotoButton: UIButton!
+    @IBOutlet weak var retakePhotoButton: UIButton!
+    
     //カメラ
     var cameraType: Bool = true
     var captureSession: AVCaptureSession!
@@ -40,6 +44,9 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
         //おしゃべり機能
         self.speech.delegate = self;
 
+        //ボタンの設定
+        self.buttonSetting(takePhoto: true, change: true, save: false, retake: false)
+        
         // Watch Connectivityが利用可能か確認
         if (WCSession.isSupported()) {
             self.session.delegate = self
@@ -97,8 +104,8 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
     }
 
     func takePhoto() {
-        //ボタンを無効
-        self.disableButton()
+        //ボタンの設定
+        self.buttonSetting(takePhoto: false, change: false, save: true, retake: true)
 
         //撮影設定
         let photoSetting = AVCapturePhotoSettings()
@@ -123,6 +130,9 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
     @IBAction func reTakePhoto(_ sender: Any) {
         //セッション開始
         captureSession.startRunning()
+        
+        //ボタンの設定
+        self.buttonSetting(takePhoto: true, change: true, save: false, retake: false)
     }
     
     //保存ボタン
@@ -148,6 +158,9 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
 
         //ダイアログ表示
         alert(title: title, message: message)
+        
+        //ボタンの設定
+        self.buttonSetting(takePhoto: true, change: true, save: false, retake: false)
     }
 
     //MARK: - おしゃべり機能
@@ -194,19 +207,17 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
     }
 
     //ボタンの有効・無効の制御
-    func disableButton(){
-//        self.shutterButton.isEnabled = false
-//        self.changeButton.isEnabled = false
-//        self.backButton.isEnabled = false
-//        self.indicatorView.isHidden = false
+    func buttonSetting(takePhoto:Bool, change:Bool, save:Bool, retake:Bool){
+        self.takePhotoButton.isEnabled = takePhoto
+        self.changeCameraButton.isEnabled = change
+        self.savePhotoButton.isEnabled = save
+        self.retakePhotoButton.isEnabled = retake
     }
 
     // MARK: - Apple Watch関連
     func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
         print(message)
-        self.label.text = (message["message"] as! String)
         speak();
-
     }
 
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {

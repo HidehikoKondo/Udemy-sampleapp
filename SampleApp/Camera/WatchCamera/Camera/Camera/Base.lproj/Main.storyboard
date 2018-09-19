@@ -68,6 +68,10 @@
                     <connections>
                         <outlet property="CameraView" destination="eRA-wm-z9M" id="HSm-LG-FDb"/>
                         <outlet property="cameraView" destination="eRA-wm-z9M" id="Glc-IE-cMP"/>
+                        <outlet property="changeCameraButton" destination="xs3-eb-2Jr" id="46G-Sk-Kk4"/>
+                        <outlet property="retakePhotoButton" destination="r5T-aK-91U" id="oNy-OH-Zpb"/>
+                        <outlet property="savePhotoButton" destination="4DV-qd-uJ8" id="tDQ-hA-0rg"/>
+                        <outlet property="takePhotoButton" destination="8Qh-mX-VIa" id="jJr-y0-tSA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
