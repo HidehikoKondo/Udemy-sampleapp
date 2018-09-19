@@ -18,17 +18,11 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
     // MARK: -変数宣言
     //Outlets
     @IBOutlet weak var cameraView: UIView!
-    @IBOutlet weak var label: UILabel!
 
     //カメラ
     var cameraType: Bool = true
-
-//    var cameraDevices: AVCaptureDevice!
-//    var imageOutput: AVCaptureStillImageOutput!
-    
     var captureSession: AVCaptureSession!
     var photoOutput: AVCapturePhotoOutput!
-    
     var cameraImage: UIImage!
 
     //おしゃべり機能
@@ -40,13 +34,13 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
     //MARK: - ViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        //1
+        //カメラ接続
         self.cameraConnection(type: cameraType)
         
         //おしゃべり機能
         self.speech.delegate = self;
 
-        // Watch Connectivity サポートチェック
+        // Watch Connectivityが利用可能か確認
         if (WCSession.isSupported()) {
             self.session.delegate = self
             self.session.activate()
@@ -55,21 +49,24 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
 
 
     // MARK: - カメラ関連
+    //カメラ接続〜映像表示
     func cameraConnection(type: Bool){
+        //カメラの接続設定
         captureSession = AVCaptureSession()
         captureSession.sessionPreset = AVCaptureSession.Preset.hd1920x1080
         photoOutput = AVCapturePhotoOutput()
 
+        //フロントカメラ or バックカメラ
         let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front)
         let backCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .back)
-        
         var device:AVCaptureDevice?
         if(type == true){
             device = frontCamera
         }else{
             device = backCamera
         }
-        
+
+        //映像表示
         do {
             let input = try AVCaptureDeviceInput(device: device!)
             if (captureSession.canAddInput(input)) {
@@ -93,10 +90,8 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
     func changeCamera(){
         //いったんセッション切る
         captureSession.stopRunning()
-
         //カメラタイプを反転
         cameraType = !cameraType
-
         //再接続
         self.cameraConnection(type: cameraType)
     }
@@ -104,50 +99,27 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
     func takePhoto() {
         //ボタンを無効
         self.disableButton()
-        
-        
-        let settingsForMonitoring = AVCapturePhotoSettings()
-        settingsForMonitoring.flashMode = .auto
-        settingsForMonitoring.isAutoStillImageStabilizationEnabled = true
-        settingsForMonitoring.isHighResolutionPhotoEnabled = false
-        photoOutput?.capturePhoto(with: settingsForMonitoring, delegate: self)
-        
-        
-        //ビデオ出力に接続
-//        let captureVideoConnection = photoOutput.connection(with: AVMediaType.video)
-//
-//        //接続から画像を取得
-//        self.imageOutput.captureStillImageAsynchronously(from: captureVideoConnection!) { (imageDataBuffer, error) -> Void in
-//            //取得したImageのDataBufferをJPEGを変換
-//            let capturedImageData: NSData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataBuffer!)! as NSData
-//            //JPEGからUIImageを作成
-//            self.cameraImage = UIImage(data: capturedImageData as Data)!
-//
-//            //カメラを止める
-//            self.captureSession.stopRunning()
-        
-//            //インカメのときだけ写真を反転させる
-//            if(self.cameraType){
-//                self.photoImage = cameraImage.flipHorizontal()
-//            }else{
-//                self.photoImage = cameraImage
-//            }
-            
-//        }
+
+        //撮影設定
+        let photoSetting = AVCapturePhotoSettings()
+        photoSetting.flashMode = .auto
+        photoSetting.isAutoStillImageStabilizationEnabled = true
+        photoSetting.isHighResolutionPhotoEnabled = false
+        photoOutput?.capturePhoto(with: photoSetting, delegate: self)
     }
 
+    //写真出力
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-
-        //カメラを止める
+        //キャプチャを止める
         self.captureSession.stopRunning()
 
         let photoData = photo.fileDataRepresentation()
             
         //JPEGからUIImageを作成
         self.cameraImage = UIImage(data: photoData!)
-        
     }
-    
+
+    //再撮影
     @IBAction func reTakePhoto(_ sender: Any) {
         //セッション開始
         captureSession.startRunning()
@@ -161,16 +133,20 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
         // UIImage の画像をカメラロールに写真を保存
         UIImageWriteToSavedPhotosAlbum(targetImage!, self, #selector(self.showResultOfSaveImage(_:didFinishSavingWithError:contextInfo:)), nil)
     }
-    
+
+    //カメラロールへの保存後の処理
     @objc func showResultOfSaveImage(_ image: UIImage, didFinishSavingWithError error: NSError!, contextInfo: UnsafeMutableRawPointer) {
+        //ダイアログに結果を表示
         var title = "保存完了"
         var message = "カメラロールに写真を保存しました"
-        
-        if error != nil {
+
+        //エラー発生時のメッセージ
+        if (error != nil) {
             title = "エラー"
             message = "写真の保存に失敗しました"
         }
-        
+
+        //ダイアログ表示
         alert(title: title, message: message)
     }
 
@@ -234,23 +210,19 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
     }
 
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        print("---session---")
-        self.label.text = "session"
+        print("session")
     }
 
     func sessionDidBecomeInactive(_ session: WCSession) {
-        print("---sessionDidBecomeInactive---")
-        self.label.text = "sessionDidBecomeInactive"
+        print("sessionDidBecomeInactive")
     }
 
     func sessionDidDeactivate(_ session: WCSession) {
-        print("---sessionDidDeactivate---")
-        self.label.text = "sessionDidDeactivate"
+        print("sessionDidDeactivate")
     }
 
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
         print("---didReceiveApplicationContext---")
-        self.label.text = "didReceiveApplicationContext"
     }
 }
 
