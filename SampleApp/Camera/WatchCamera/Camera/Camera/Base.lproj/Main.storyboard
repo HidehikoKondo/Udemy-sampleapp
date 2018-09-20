@@ -18,50 +18,83 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eRA-wm-z9M">
-                                <rect key="frame" x="0.0" y="20" width="375" height="375"/>
-                                <color key="backgroundColor" red="0.93709483364112178" green="1" blue="0.5065648337453722" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RdT-qm-79E">
+                                <rect key="frame" x="0.0" y="532.5" width="375" height="134.5"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4DV-qd-uJ8">
+                                        <rect key="frame" x="91.5" y="37" width="64.5" height="64.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="4DV-qd-uJ8" secondAttribute="height" multiplier="1:1" id="DgA-jb-uuG"/>
+                                        </constraints>
+                                        <state key="normal" image="Button_SavePhoto"/>
+                                        <connections>
+                                            <action selector="saveToLibrary:" destination="BYZ-38-t0r" eventType="touchUpInside" id="baY-Pa-qJA"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r5T-aK-91U">
+                                        <rect key="frame" x="22" y="37" width="64.5" height="64.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="r5T-aK-91U" secondAttribute="height" multiplier="1:1" id="dQc-lF-25o"/>
+                                        </constraints>
+                                        <state key="normal" image="Button_RetakePhoto"/>
+                                        <connections>
+                                            <action selector="reTakePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3DW-C9-adg"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Qh-mX-VIa">
+                                        <rect key="frame" x="161" y="15" width="105" height="104.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="8Qh-mX-VIa" secondAttribute="height" multiplier="1:1" id="FNr-GV-g14"/>
+                                        </constraints>
+                                        <state key="normal" image="Button_TakePhoto"/>
+                                        <connections>
+                                            <action selector="takePhotoButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="r3b-gl-1M1"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xs3-eb-2Jr">
+                                        <rect key="frame" x="274" y="35" width="64.5" height="64.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="xs3-eb-2Jr" secondAttribute="height" multiplier="1:1" id="SZO-HK-kH4"/>
+                                        </constraints>
+                                        <state key="normal" image="Button_ChangeCam"/>
+                                        <connections>
+                                            <action selector="changeCameraButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fem-a2-vpn"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.39524647887323944" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="eRA-wm-z9M" secondAttribute="height" multiplier="1:1" id="OBs-6K-tvz"/>
+                                    <constraint firstItem="8Qh-mX-VIa" firstAttribute="leading" secondItem="4DV-qd-uJ8" secondAttribute="trailing" constant="5" id="3jZ-td-7dX"/>
+                                    <constraint firstItem="8Qh-mX-VIa" firstAttribute="centerX" secondItem="RdT-qm-79E" secondAttribute="centerX" constant="26" id="68J-z7-j9c"/>
+                                    <constraint firstItem="r5T-aK-91U" firstAttribute="top" secondItem="RdT-qm-79E" secondAttribute="top" constant="37" id="7Gn-DP-RdD"/>
+                                    <constraint firstAttribute="bottom" secondItem="4DV-qd-uJ8" secondAttribute="bottom" constant="33" id="BI9-p8-Kaj"/>
+                                    <constraint firstItem="xs3-eb-2Jr" firstAttribute="top" secondItem="RdT-qm-79E" secondAttribute="top" constant="35" id="Bkb-3F-YF4"/>
+                                    <constraint firstItem="4DV-qd-uJ8" firstAttribute="leading" secondItem="r5T-aK-91U" secondAttribute="trailing" constant="5" id="Rkl-6Y-WSl"/>
+                                    <constraint firstItem="xs3-eb-2Jr" firstAttribute="leading" secondItem="8Qh-mX-VIa" secondAttribute="trailing" constant="8" id="WvS-sr-OMT"/>
+                                    <constraint firstAttribute="bottom" secondItem="8Qh-mX-VIa" secondAttribute="bottom" constant="15" id="XID-BO-qHp"/>
+                                    <constraint firstAttribute="width" secondItem="RdT-qm-79E" secondAttribute="height" multiplier="15:4" constant="-130" id="d57-bB-Txc"/>
+                                    <constraint firstAttribute="bottom" secondItem="r5T-aK-91U" secondAttribute="bottom" constant="33" id="gdq-Uf-l6E"/>
+                                    <constraint firstAttribute="bottom" secondItem="xs3-eb-2Jr" secondAttribute="bottom" constant="35" id="r5Q-mf-Ets"/>
+                                    <constraint firstItem="8Qh-mX-VIa" firstAttribute="top" secondItem="RdT-qm-79E" secondAttribute="top" constant="15" id="u5O-Ce-AyZ"/>
+                                    <constraint firstItem="4DV-qd-uJ8" firstAttribute="top" secondItem="RdT-qm-79E" secondAttribute="top" constant="37" id="xkA-U8-Qqz"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4DV-qd-uJ8">
-                                <rect key="frame" x="157" y="587" width="60" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="Button_SavePhoto"/>
-                                <connections>
-                                    <action selector="saveToLibrary:" destination="BYZ-38-t0r" eventType="touchUpInside" id="baY-Pa-qJA"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Qh-mX-VIa">
-                                <rect key="frame" x="112" y="414" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="Button_TakePhoto"/>
-                                <connections>
-                                    <action selector="takePhotoButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="r3b-gl-1M1"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xs3-eb-2Jr">
-                                <rect key="frame" x="299" y="459" width="60" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="Button_ChangeCam"/>
-                                <connections>
-                                    <action selector="changeCameraButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fem-a2-vpn"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r5T-aK-91U">
-                                <rect key="frame" x="16" y="459" width="60" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="Button_RetakePhoto"/>
-                                <connections>
-                                    <action selector="reTakePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3DW-C9-adg"/>
-                                </connections>
-                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="eRA-wm-z9M" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="6k2-ij-VLd"/>
+                            <constraint firstItem="eRA-wm-z9M" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="8gJ-ui-feF"/>
                             <constraint firstItem="eRA-wm-z9M" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Bfd-Wm-iUR"/>
                             <constraint firstItem="eRA-wm-z9M" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="GL3-wO-AVq"/>
+                            <constraint firstItem="RdT-qm-79E" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="cZe-ml-ook"/>
+                            <constraint firstItem="eRA-wm-z9M" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fVh-m1-T31"/>
+                            <constraint firstItem="RdT-qm-79E" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="g7u-EF-SxC"/>
+                            <constraint firstItem="RdT-qm-79E" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="joB-CA-XTY"/>
                             <constraint firstItem="eRA-wm-z9M" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="p4Z-2N-gYa"/>
+                            <constraint firstItem="eRA-wm-z9M" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="pxe-dH-67w"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -76,7 +109,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
+            <point key="canvasLocation" x="133.125" y="137.5"/>
         </scene>
     </scenes>
     <resources>

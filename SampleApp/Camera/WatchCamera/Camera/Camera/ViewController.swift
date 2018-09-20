@@ -38,9 +38,6 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
     //MARK: - ViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        //カメラ接続
-        self.cameraConnection(type: cameraType)
-        
         //おしゃべり機能
         self.speech.delegate = self;
 
@@ -54,6 +51,10 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
         }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        //カメラ接続
+        self.cameraConnection(type: cameraType)
+    }
 
     // MARK: - カメラ関連
     //カメラ接続〜映像表示
