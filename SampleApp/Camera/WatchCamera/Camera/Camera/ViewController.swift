@@ -129,7 +129,7 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
 
     //再撮影
     @IBAction func reTakePhoto(_ sender: Any) {
-        //セッション開始
+        //セッション再開
         captureSession.startRunning()
         
         //ボタンの設定
@@ -159,7 +159,8 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
 
         //ダイアログ表示
         alert(title: title, message: message)
-        
+        //セッション再開
+        captureSession.startRunning()
         //ボタンの設定
         self.buttonSetting(takePhoto: true, change: true, save: false, retake: false)
     }
