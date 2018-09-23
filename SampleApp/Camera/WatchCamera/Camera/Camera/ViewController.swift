@@ -166,8 +166,8 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
     }
 
     //MARK: - おしゃべり機能
-    func speak(){
-        let utterance = AVSpeechUtterance(string:"はい、チーズ")
+    func speak(message:String){
+        let utterance = AVSpeechUtterance(string:message as String)
         utterance.voice = AVSpeechSynthesisVoice(language: "ja-JP")
         utterance.rate = AVSpeechUtteranceDefaultSpeechRate
         utterance.pitchMultiplier = 1.0
@@ -194,7 +194,9 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
     }
 
     @IBAction func takePhotoButton(_ sender: Any){
-        speak()
+        //ボタンの設定
+        self.buttonSetting(takePhoto: false, change: false, save: true, retake: true)
+        speak(message: "はい、チーズ")
     }
 
     //アラート表示
@@ -219,7 +221,8 @@ class ViewController: UIViewController, AVSpeechSynthesizerDelegate, WCSessionDe
     // MARK: - Apple Watch関連
     func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
         print(message)
-        speak();
+        
+        speak(message:(message["message"] as! String?)!);
     }
 
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {

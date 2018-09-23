@@ -46,17 +46,28 @@ class InterfaceController: WKInterfaceController,WCSessionDelegate {
     }
 
     @IBAction func shutterButton() {
-        submit()
+        submit(message: "はい、チーズ")
     }
     
     @IBAction func voiceButton() {
         print("ボイス")
+        
+        let suggestions: Array<String>! = ["はい、笑ってくださーい","はい、チーズ","3、2、1"]
+        presentTextInputController(withSuggestions: suggestions,
+                                   allowedInputMode: WKTextInputMode.plain,
+                                                  completion: {(results) -> Void in
+                                                    if results != nil && results!.count > 0 { //selection made
+                                                        let message = results?[0] as? String
+                                                        self.submit(message: message!)
+                                                    }
+        }
+        )
     }
     
     
-    func submit(){
+    func submit(message:String){
         if  self.session.isReachable {
-            self.session.sendMessage(["message":"shutter"],replyHandler: {(replyMessage) -> Void in
+            self.session.sendMessage(["message":message],replyHandler: {(replyMessage) -> Void in
                 print ("receive from apple watch","test");
             }){(error) -> Void in
                 print(error)
