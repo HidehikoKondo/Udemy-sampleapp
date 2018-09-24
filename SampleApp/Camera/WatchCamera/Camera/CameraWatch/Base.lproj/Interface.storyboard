@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="14313.18" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
-    <device id="watch38" orientation="portrait">
+    <device id="watch42" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -13,12 +13,12 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="CameraWatch" customModuleProvider="target">
                     <items>
-                        <button width="1" alignment="left" title="シャッター" id="2GS-sK-vdH">
+                        <button width="133" height="133" alignment="center" backgroundImage="Button_TakePhoto" id="2GS-sK-vdH">
                             <connections>
                                 <action selector="shutterButton" destination="AgC-eL-Hgc" id="Wvd-rQ-ytf"/>
                             </connections>
                         </button>
-                        <button width="1" alignment="left" title="ボイス" id="7Fe-8X-G3W">
+                        <button width="1" alignment="left" title="🎤音声入力" id="7Fe-8X-G3W">
                             <connections>
                                 <action selector="voiceButton" destination="AgC-eL-Hgc" id="Avn-HV-7P1"/>
                             </connections>
@@ -26,7 +26,7 @@
                     </items>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="-220" y="-20"/>
+            <point key="canvasLocation" x="-56.666666666666671" y="20.923076923076923"/>
         </scene>
     </scenes>
 </document>
