@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_0" orientation="portrait">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,35 +15,47 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="WatchCamera" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EmE-p9-Vf1">
-                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qTZ-N2-Fyx">
-                                <rect key="frame" x="0.0" y="440" width="320" height="128"/>
+                                <rect key="frame" x="0.0" y="539" width="375" height="128"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dWb-So-eOD">
-                                        <rect key="frame" x="149" y="24" width="80" height="80"/>
+                                        <rect key="frame" x="179" y="24" width="80" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="Button_TakePhoto"/>
+                                        <connections>
+                                            <action selector="takePhotoButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lFi-mT-ZsX"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Clh-9Z-0EB">
-                                        <rect key="frame" x="91" y="39" width="50" height="50"/>
+                                        <rect key="frame" x="116" y="39" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Button" image="Button_SavePhoto"/>
+                                        <connections>
+                                            <action selector="saveToLibrary:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ECt-QY-U9o"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="42W-DC-Y3d">
-                                        <rect key="frame" x="33" y="39" width="50" height="50"/>
+                                        <rect key="frame" x="53" y="39" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="Button_RetakePhoto"/>
+                                        <connections>
+                                            <action selector="retakePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Txz-CQ-UWC"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mfm-rL-wpa">
-                                        <rect key="frame" x="237" y="39" width="50" height="50"/>
+                                        <rect key="frame" x="272" y="39" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="Button_ChangeCam"/>
+                                        <connections>
+                                            <action selector="changeCameraButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Qd-pm-kMY"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -64,6 +76,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="cameraView" destination="EmE-p9-Vf1" id="ONS-kT-CEU"/>
+                        <outlet property="changeViewButton" destination="Mfm-rL-wpa" id="HiS-fb-9ZC"/>
+                        <outlet property="retakePhotoButton" destination="42W-DC-Y3d" id="jFp-vo-Gmu"/>
+                        <outlet property="savePhotoButton" destination="Clh-9Z-0EB" id="tbu-Vv-sQY"/>
+                        <outlet property="takePhotoButton" destination="dWb-So-eOD" id="qda-Vj-auc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
