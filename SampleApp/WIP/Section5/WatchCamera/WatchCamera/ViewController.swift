@@ -11,7 +11,7 @@ import AVFoundation
 import ImageIO
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var takePhotoButton: UIButton!
     @IBOutlet weak var changeViewButton: UIButton!
@@ -86,8 +86,36 @@ class ViewController: UIViewController {
         self.cameraConnection(type: cameraType)
     }
     
+    //写真を撮る
+    func takePhoto() {
+        //ボタンの設定
+        self.buttonSetting(takePhoto: false, change: false, save: true, retake: true)
+        
+        //撮影設定
+        let photoSetting = AVCapturePhotoSettings()
+        photoSetting.flashMode = .auto
+        photoSetting.isAutoStillImageStabilizationEnabled = true
+        photoSetting.isHighResolutionPhotoEnabled = false
+        photoOutput?.capturePhoto(with: photoSetting, delegate: self)
+    }
+    
+    //写真出力
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        //キャプチャを止める
+        self.captureSession.stopRunning()
+        
+        let photoData = photo.fileDataRepresentation()
+        
+        //JPEGからUIImageを作成
+        self.cameraImage = UIImage(data: photoData!)
+    }
 
     @IBAction func retakePhoto(_ sender: Any) {
+        //セッション再開
+        captureSession.startRunning()
+        
+        //ボタンの設定
+        self.buttonSetting(takePhoto: true, change: true, save: false, retake: false)
     }
     
     @IBAction func saveToLibrary(_ sender: Any) {
@@ -98,6 +126,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func takePhotoButton(_ sender: Any) {
+        //ボタンの設定
+        self.buttonSetting(takePhoto: false, change: false, save: true, retake: true)
+        //撮影
+        self.takePhoto()
     }
     
     
