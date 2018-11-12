@@ -29,6 +29,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        //ボタンの設定
+        self.buttonSetting(takePhoto: true, change: true, save: false, retake: false)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -71,6 +75,17 @@ class ViewController: UIViewController {
             print(error)
         }
     }
+    
+    //フロントカメラ・バックカメラの切り替え
+    func changeCamera(){
+        //いったんセッション切る
+        captureSession.stopRunning()
+        //カメラタイプを反転
+        cameraType = !cameraType
+        //再接続
+        self.cameraConnection(type: cameraType)
+    }
+    
 
     @IBAction func retakePhoto(_ sender: Any) {
     }
@@ -79,11 +94,19 @@ class ViewController: UIViewController {
     }
     
     @IBAction func changeCameraButton(_ sender: Any) {
+        changeCamera();
     }
     
     @IBAction func takePhotoButton(_ sender: Any) {
     }
     
     
+    //ボタンの有効・無効の制御
+    func buttonSetting(takePhoto:Bool, change:Bool, save:Bool, retake:Bool){
+        self.takePhotoButton.isEnabled = takePhoto
+        self.changeViewButton.isEnabled = change
+        self.savePhotoButton.isEnabled = save
+        self.retakePhotoButton.isEnabled = retake
+    }
 }
 
