@@ -11,7 +11,7 @@ import AVFoundation
 import ImageIO
 
 
-class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
+class ViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVSpeechSynthesizerDelegate {
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var takePhotoButton: UIButton!
     @IBOutlet weak var changeViewButton: UIButton!
@@ -24,11 +24,15 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     var captureSession: AVCaptureSession!
     var photoOutput: AVCapturePhotoOutput!
     var cameraImage: UIImage!
-    
+    //おしゃべり機能
+    var speech = AVSpeechSynthesizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        //おしゃべり機能
+        self.speech.delegate = self;
         
         //ボタンの設定
         self.buttonSetting(takePhoto: true, change: true, save: false, retake: false)
@@ -119,7 +123,44 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     }
     
     @IBAction func saveToLibrary(_ sender: Any) {
+        // その中の UIImage を取得
+        let targetImage = self.cameraImage
+        
+        // UIImage の画像をカメラロールに写真を保存
+        UIImageWriteToSavedPhotosAlbum(targetImage!, self, #selector(self.showResultOfSaveImage(_:didFinishSavingWithError:contextInfo:)), nil)
     }
+    
+    //カメラロールへの保存後の処理
+    @objc func showResultOfSaveImage(_ image: UIImage, didFinishSavingWithError error: NSError!, contextInfo: UnsafeMutableRawPointer) {
+        //ダイアログに結果を表示
+        var title = "保存完了"
+        var message = "カメラロールに写真を保存しました"
+        
+        //エラー発生時のメッセージ
+        if (error != nil) {
+            title = "エラー"
+            message = "写真の保存に失敗しました"
+        }
+        
+        //ダイアログ表示
+        alert(title: title, message: message)
+        //セッション再開
+        captureSession.startRunning()
+        //ボタンの設定
+        self.buttonSetting(takePhoto: true, change: true, save: false, retake: false)
+    }
+    
+    //アラート表示
+    func alert(title: String, message:String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        // OKボタンを追加
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler:{(action:UIAlertAction!) -> Void in }))
+        
+        // UIAlertController を表示
+        self.present(alert, animated: true, completion: nil)
+    }
+
     
     @IBAction func changeCameraButton(_ sender: Any) {
         changeCamera();
@@ -128,10 +169,32 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBAction func takePhotoButton(_ sender: Any) {
         //ボタンの設定
         self.buttonSetting(takePhoto: false, change: false, save: true, retake: true)
-        //撮影
-        self.takePhoto()
+
+        //読み上げ機能の呼び出し
+        speak(message: "はい、チーズ")
     }
     
+    //読み上げ機能
+    func speak(message:String){
+        let utterance = AVSpeechUtterance(string:message as String)
+        utterance.voice = AVSpeechSynthesisVoice(language: "ja-JP")
+        utterance.rate = AVSpeechUtteranceDefaultSpeechRate
+        utterance.pitchMultiplier = 1.0
+        self.speech.speak(utterance)
+    }
+    //読み上げ開始時に呼び出し
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance)
+    {
+        print("読み上げ開始")
+    }
+    
+    //読み上げ終了時に呼び出し
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance)
+    {
+        print("読み上げ終了")
+        self.takePhoto()
+    }
+
     
     //ボタンの有効・無効の制御
     func buttonSetting(takePhoto:Bool, change:Bool, save:Bool, retake:Bool){
