@@ -39,4 +39,38 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         super.didDeactivate()
     }
 
+    //シャッターボタン
+    @IBAction func shutterButton() {
+        submit(message: "はい、チーズ")
+    }
+    
+    //iPhoneにメッセージを送信
+    func submit(message:String){
+        if  self.session.isReachable {
+            self.session.sendMessage(["message":message],replyHandler: {(replyMessage) -> Void in
+                print ("receive from apple watch","test");
+            }){(error) -> Void in
+                print(error)
+            }
+        }else{
+            print("not reachable")
+        }
+    }
+    
+    //音声入力
+    @IBAction func voiceButton() {
+        print("ボイス")
+        
+        let suggestions: Array<String>! = ["はい、笑ってくださーい","はい、チーズ","3、2、1"]
+        presentTextInputController(withSuggestions: suggestions,
+                                   allowedInputMode: WKTextInputMode.plain,
+                                   completion: {(results) -> Void in
+                                    if results != nil && results!.count > 0 { //selection made
+                                        let message = results?[0] as? String
+                                        self.submit(message: message!)
+                                    }
+                                    
+        })
+    }
+    
 }

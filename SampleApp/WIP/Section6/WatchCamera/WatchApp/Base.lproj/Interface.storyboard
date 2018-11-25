@@ -14,8 +14,16 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="WatchApp" customModuleProvider="target">
                     <items>
-                        <button width="106" height="106" alignment="center" backgroundImage="Button_TakePhoto" id="Sey-h9-5y9"/>
-                        <button width="1" alignment="left" title="🎤音声入力" id="dNg-lG-woC"/>
+                        <button width="106" height="106" alignment="center" backgroundImage="Button_TakePhoto" id="Sey-h9-5y9">
+                            <connections>
+                                <action selector="shutterButton" destination="AgC-eL-Hgc" id="9Kx-sW-MLp"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="🎤音声入力" id="dNg-lG-woC">
+                            <connections>
+                                <action selector="voiceButton" destination="AgC-eL-Hgc" id="tDQ-VL-d4i"/>
+                            </connections>
+                        </button>
                     </items>
                 </controller>
             </objects>

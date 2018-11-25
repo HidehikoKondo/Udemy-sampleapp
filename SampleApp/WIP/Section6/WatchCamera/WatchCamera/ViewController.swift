@@ -9,9 +9,9 @@
 import UIKit
 import AVFoundation
 import ImageIO
+import WatchConnectivity
 
-
-class ViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVSpeechSynthesizerDelegate {
+class ViewController: UIViewController, AVCapturePhotoCaptureDelegate, AVSpeechSynthesizerDelegate, WCSessionDelegate {
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var takePhotoButton: UIButton!
     @IBOutlet weak var changeViewButton: UIButton!
@@ -27,6 +27,9 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVSpeechSy
     //おしゃべり機能
     var speech = AVSpeechSynthesizer()
     
+    //セッション
+    var session = WCSession.default;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -36,6 +39,12 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVSpeechSy
         
         //ボタンの設定
         self.buttonSetting(takePhoto: true, change: true, save: false, retake: false)
+        
+        // Watch Connectivityが利用可能か確認
+        if (WCSession.isSupported()) {
+            self.session.delegate = self
+            self.session.activate()
+        }
         
     }
     
@@ -203,5 +212,25 @@ class ViewController: UIViewController, AVCapturePhotoCaptureDelegate,AVSpeechSy
         self.savePhotoButton.isEnabled = save
         self.retakePhotoButton.isEnabled = retake
     }
+    
+    
+    //Apple Watch関連
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
+        print(message)
+        speak(message:(message["message"] as! String?)!);
+    }
+    
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        print("sessionDidBecomeInactive")
+    }
+    
+    func sessionDidDeactivate(_ session: WCSession) {
+        print("sessionDidDeactivate")
+    }
+    
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        print("activationDidComplete")
+    }
+
 }
 
