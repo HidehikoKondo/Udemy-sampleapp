@@ -92,34 +92,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (contact.bodyA.node?.name == "BLOCK"){
             //ブロックを消す
             contact.bodyA.node?.removeFromParent()
+            //パーティクル
+            starParticle(node: contact.bodyA.node!)
         }else if(contact.bodyB.node?.name == "BLOCK" ){
             //ブロックを消す
             contact.bodyB.node?.removeFromParent()
+            //パーティクル
+            starParticle(node: contact.bodyB.node!)
         }
+
         //ブロックの数が0ならゲームクリア
         if(self.blocks!.children.count <= 0){
             self.gameClear()
         }
     }
-//    func didBegin(_ contact: SKPhysicsContact) {
-//        //BLOCKに何かがぶつかったらブロックを消す
-//        if (contact.bodyA.node?.name == "BLOCK"){
-//            //ブロックを消す
-//            contact.bodyA.node?.removeFromParent()
-//            //パーティクル
-//            starParticle(node: contact.bodyA.node!)
-//        }else if(contact.bodyB.node?.name == "BLOCK" ){
-//            //ブロックを消す
-//            contact.bodyB.node?.removeFromParent()
-//            //パーティクル
-//            starParticle(node: contact.bodyB.node!)
-//        }
-//
-//        //ブロックの数が0ならゲームクリア
-//        if(self.blocks!.children.count <= 0){
-//            self.gameClear()
-//        }
-//    }
     
     //星のパーティクル
     func starParticle(node:SKNode){
@@ -129,16 +115,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         star?.position.y = node.position.y
         addChild(star!)
 
-        //効果音再生Action
-        let seAction:SKAction = SKAction(named: "HIT")!
-        //待ちAction
-        let waitAction:SKAction = SKAction.wait(forDuration: 1)
-        //オブジェクトの削除Action
-        let removeAction:SKAction = SKAction.removeFromParent()
-        //シーケンス
-        let sequence:SKAction = SKAction.sequence([seAction, waitAction, removeAction])
-        //Action実行
-        star?.run(sequence)
+//        //効果音再生Action
+//        let seAction:SKAction = SKAction(named: "HIT")!
+//        //待ちAction
+//        let waitAction:SKAction = SKAction.wait(forDuration: 1)
+//        //オブジェクトの削除Action
+//        let removeAction:SKAction = SKAction.removeFromParent()
+//        //シーケンス
+//        let sequence:SKAction = SKAction.sequence([seAction, waitAction, removeAction])
+//        //Action実行
+//        star?.run(sequence)
     }
     
     //(4)スタートとスタートに戻る処理
@@ -181,10 +167,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.label?.run(SKAction(named: "GAMEOVER")!)
         
         //ステージクリアのパーティクル
-//        let clear = SKEmitterNode(fileNamed: "clear")
-//        clear?.position.x = 0
-//        clear?.position.y = 700
-//        addChild(clear!)
+        let clear = SKEmitterNode(fileNamed: "clear")
+        clear?.position.x = 0
+        clear?.position.y = 700
+        addChild(clear!)
     }
 
     

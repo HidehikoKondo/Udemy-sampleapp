@@ -17,6 +17,9 @@
 		E34EA0A621B3BD1E00C624B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E34EA0A421B3BD1E00C624B0 /* LaunchScreen.storyboard */; };
 		E34EA0AF21B3BDEC00C624B0 /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E34EA0AD21B3BDEC00C624B0 /* explosion.mp3 */; };
 		E34EA0B021B3BDEC00C624B0 /* hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E34EA0AE21B3BDEC00C624B0 /* hit.mp3 */; };
+		E3BBA66921B433A0000AE8D1 /* explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = E3BBA66821B433A0000AE8D1 /* explosion.sks */; };
+		E3BBA66B21B43561000AE8D1 /* star.sks in Resources */ = {isa = PBXBuildFile; fileRef = E3BBA66A21B43561000AE8D1 /* star.sks */; };
+		E3BBA66D21B43636000AE8D1 /* clear.sks in Resources */ = {isa = PBXBuildFile; fileRef = E3BBA66C21B43636000AE8D1 /* clear.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,9 @@
 		E34EA0A721B3BD1E00C624B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E34EA0AD21B3BDEC00C624B0 /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = explosion.mp3; path = ../../../../Game/assets/gameobject/explosion.mp3; sourceTree = "<group>"; };
 		E34EA0AE21B3BDEC00C624B0 /* hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = hit.mp3; path = ../../../../Game/assets/gameobject/hit.mp3; sourceTree = "<group>"; };
+		E3BBA66821B433A0000AE8D1 /* explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = explosion.sks; sourceTree = "<group>"; };
+		E3BBA66A21B43561000AE8D1 /* star.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = star.sks; sourceTree = "<group>"; };
+		E3BBA66C21B43636000AE8D1 /* clear.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = clear.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,9 +76,12 @@
 				E34EA09721B3BD1D00C624B0 /* GameScene.sks */,
 				E34EA09921B3BD1D00C624B0 /* Actions.sks */,
 				E34EA09B21B3BD1D00C624B0 /* GameScene.swift */,
+				E3BBA66821B433A0000AE8D1 /* explosion.sks */,
 				E34EA09D21B3BD1D00C624B0 /* GameViewController.swift */,
 				E34EA09F21B3BD1D00C624B0 /* Main.storyboard */,
 				E34EA0A221B3BD1E00C624B0 /* Assets.xcassets */,
+				E3BBA66A21B43561000AE8D1 /* star.sks */,
+				E3BBA66C21B43636000AE8D1 /* clear.sks */,
 				E34EA0A421B3BD1E00C624B0 /* LaunchScreen.storyboard */,
 				E34EA0A721B3BD1E00C624B0 /* Info.plist */,
 			);
@@ -138,10 +147,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E34EA0B021B3BDEC00C624B0 /* hit.mp3 in Resources */,
+				E3BBA66D21B43636000AE8D1 /* clear.sks in Resources */,
 				E34EA0AF21B3BDEC00C624B0 /* explosion.mp3 in Resources */,
+				E3BBA66B21B43561000AE8D1 /* star.sks in Resources */,
 				E34EA0A121B3BD1D00C624B0 /* Main.storyboard in Resources */,
 				E34EA09821B3BD1D00C624B0 /* GameScene.sks in Resources */,
 				E34EA0A321B3BD1E00C624B0 /* Assets.xcassets in Resources */,
+				E3BBA66921B433A0000AE8D1 /* explosion.sks in Resources */,
 				E34EA0A621B3BD1E00C624B0 /* LaunchScreen.storyboard in Resources */,
 				E34EA09A21B3BD1D00C624B0 /* Actions.sks in Resources */,
 			);
