@@ -55,9 +55,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (contact.bodyA.node?.name == "BLOCK"){
             //ブロックを消す
             contact.bodyA.node?.removeFromParent()
+            //パーティクル
+            starParticle(node: contact.bodyA.node!)
         }else if(contact.bodyB.node?.name == "BLOCK" ){
             //ブロックを消す
             contact.bodyB.node?.removeFromParent()
+            //パーティクル
+            starParticle(node: contact.bodyA.node!)
         }
         //ブロックの数が0ならゲームクリア
         if(self.blocks!.children.count <= 0){
@@ -65,6 +69,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
+    //星のパーティクル
+    func starParticle(node:SKNode){
+        //プレイヤー爆発 & 削除
+        let star = SKEmitterNode(fileNamed: "star")
+        star?.position.x = node.position.x
+        star?.position.y = node.position.y
+        addChild(star!)
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //ゲームステータスに応じたタップ動作設定
@@ -117,6 +129,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Label表示
         self.label?.text = "GAME CLEAR"
         self.label?.run(SKAction(named: "GAMEOVER")!)
+        
+        //ステージクリアのパーティクル
+        let clear = SKEmitterNode(fileNamed: "clear")
+        clear?.position.x = 0
+        clear?.position.y = 700
+        addChild(clear!)
     }
     
     //ゲームオーバー
@@ -130,6 +148,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //ボールを削除
         self.ball?.removeFromParent()
+        
+        //プレイヤー爆発
+        let fire = SKEmitterNode(fileNamed: "explosion")
+        fire?.position.x = (player?.position.x)!
+        fire?.position.y = (player?.position.y)!
+        addChild(fire!)
+        
+        //プレイヤー削除
+        self.player?.removeFromParent()
     }
     //ゲームスタート
     func gameStart(){
