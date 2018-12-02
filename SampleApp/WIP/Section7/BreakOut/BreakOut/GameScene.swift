@@ -78,8 +78,26 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        //ゲームオーバー判定
+        if( CGFloat((self.ball?.position.y)!) < -700){
+            if(self.gameStatus != "END"){
+                self.gameOver()
+            }
+        }
     }
     
+    //ゲームオーバー
+    func gameOver(){
+        //ゲームステータスをゲームオーバー・クリアにする
+        self.gameStatus = "END"
+        
+        //Label表示
+        self.label?.text = "GAME OVER"
+        self.label?.run(SKAction(named: "GAMEOVER")!)
+        
+        //ボールを削除
+        self.ball?.removeFromParent()
+    }
     //ゲームスタート
     func gameStart(){
         //ゲームステータスをプレイ中にする

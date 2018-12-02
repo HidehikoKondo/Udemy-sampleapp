@@ -176,24 +176,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //ゲームオーバー
     func gameOver(){
+        //ゲームステータスをゲームオーバー・クリアにする
+        self.gameStatus = "END"
+        
+        //Label表示
+        self.label?.text = "GAME OVER"
+        self.label?.run(SKAction(named: "GAMEOVER")!)
+
+        //ボールを削除
+        self.ball?.removeFromParent()
+        
         //プレイヤー爆発 & 削除
         let fire = SKEmitterNode(fileNamed: "explosion")
         fire?.position.x = (player?.position.x)!
         fire?.position.y = (player?.position.y)!
         addChild(fire!)
 
-        //ボールを削除
-        self.ball?.removeFromParent()
 
         //プレイヤー爆発
         self.player?.removeFromParent()
-        
-        //ゲームステータスをゲームオーバー・クリアにする
-        self.gameStatus = "END"
-
-        //Label表示
-        self.label?.text = "GAME OVER"
-        self.label?.run(SKAction(named: "GAMEOVER")!)
         
         //効果音再生Action
         let seAction:SKAction = SKAction(named: "EXPLOSION")!
