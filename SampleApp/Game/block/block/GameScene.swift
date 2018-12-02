@@ -115,16 +115,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         star?.position.y = node.position.y
         addChild(star!)
 
-//        //効果音再生Action
-//        let seAction:SKAction = SKAction(named: "HIT")!
-//        //待ちAction
-//        let waitAction:SKAction = SKAction.wait(forDuration: 1)
-//        //オブジェクトの削除Action
-//        let removeAction:SKAction = SKAction.removeFromParent()
-//        //シーケンス
-//        let sequence:SKAction = SKAction.sequence([seAction, waitAction, removeAction])
-//        //Action実行
-//        star?.run(sequence)
+        //効果音再生Action
+        let seAction:SKAction = SKAction(named: "HIT")!
+        //待ちAction
+        let waitAction:SKAction = SKAction.wait(forDuration: 1)
+        //オブジェクトの削除Action
+        let removeAction:SKAction = SKAction.removeFromParent()
+        //シーケンス
+        let sequence:SKAction = SKAction.sequence([seAction, waitAction, removeAction])
+        //Action実行
+        star?.run(sequence)
     }
     
     //(4)スタートとスタートに戻る処理

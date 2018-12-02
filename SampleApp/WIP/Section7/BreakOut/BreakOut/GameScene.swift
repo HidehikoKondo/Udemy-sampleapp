@@ -76,6 +76,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         star?.position.x = node.position.x
         star?.position.y = node.position.y
         addChild(star!)
+        
+        //効果音再生Action
+        let seAction:SKAction = SKAction(named: "HIT")!
+        //待ちAction
+        let waitAction:SKAction = SKAction.wait(forDuration: 1)
+        //オブジェクトの削除Action
+        let removeAction:SKAction = SKAction.removeFromParent()
+        //シーケンス
+        let sequence:SKAction = SKAction.sequence([seAction, waitAction, removeAction])
+        //Action実行
+        star?.run(sequence)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -157,6 +168,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //プレイヤー削除
         self.player?.removeFromParent()
+        
+        //効果音再生Action
+        let seAction:SKAction = SKAction(named: "EXPLOSION")!
+        self.run(seAction)
     }
     //ゲームスタート
     func gameStart(){
