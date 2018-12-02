@@ -96,6 +96,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //ブロックを消す
             contact.bodyB.node?.removeFromParent()
         }
+        //ブロックの数が0ならゲームクリア
+        if(self.blocks!.children.count <= 0){
+            self.gameClear()
+        }
     }
 //    func didBegin(_ contact: SKPhysicsContact) {
 //        //BLOCKに何かがぶつかったらブロックを消す
@@ -177,10 +181,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.label?.run(SKAction(named: "GAMEOVER")!)
         
         //ステージクリアのパーティクル
-        let clear = SKEmitterNode(fileNamed: "clear")
-        clear?.position.x = 0
-        clear?.position.y = 700
-        addChild(clear!)
+//        let clear = SKEmitterNode(fileNamed: "clear")
+//        clear?.position.x = 0
+//        clear?.position.y = 700
+//        addChild(clear!)
     }
 
     

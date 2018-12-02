@@ -59,6 +59,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //ブロックを消す
             contact.bodyB.node?.removeFromParent()
         }
+        //ブロックの数が0ならゲームクリア
+        if(self.blocks!.children.count <= 0){
+            self.gameClear()
+        }
     }
 
     
@@ -100,6 +104,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.gameOver()
             }
         }
+    }
+    
+    //ゲームクリア
+    func gameClear(){
+        //ボールを削除
+        self.ball?.removeFromParent()
+        
+        //ゲームステータスをゲームオーバー・クリアにする
+        self.gameStatus = "END"
+        
+        //Label表示
+        self.label?.text = "GAME CLEAR"
+        self.label?.run(SKAction(named: "GAMEOVER")!)
     }
     
     //ゲームオーバー
