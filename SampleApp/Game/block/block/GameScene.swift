@@ -11,6 +11,7 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    //(1)変数追加
     private var label : SKLabelNode?
     private var player : SKSpriteNode?
     private var ball : SKSpriteNode?
@@ -18,6 +19,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var gameStatus : String?
 
     override func didMove(to view: SKView) {
+        
+        //オブジェクトのコードとの紐付け
         //ゲームステータス（"START"：ゲームスタート　"PLAY"：プレイ中  "END"：ゲームオーバー・クリア）
         self.gameStatus = "START"
 
@@ -38,6 +41,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        //(3)スタート処理
         //ゲームステータスに応じたタップ動作設定
         if(self.gameStatus == "START"){
             gameStart();
@@ -122,6 +127,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         star?.run(sequence)
     }
     
+    //(4)スタートとスタートに戻る処理
     //ゲームスタート
     func gameStart(){
         //ゲームステータスをプレイ中にする
@@ -134,6 +140,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let vector = CGVector(dx: 15, dy: -15)
         self.ball?.physicsBody?.applyImpulse(vector)
     }
+    
+    //シーン遷移
+    func backToStart(){
+        //同じGameSceneを開き直す
+        let transition = SKTransition.fade(withDuration: 2.0)
+        //GameScene.swiftを読み込み
+        let scene = GameScene(fileNamed: "GameScene")
+        //Sceneを画面いっぱいに表示設定
+        scene!.scaleMode = .aspectFill
+        //遷移実行
+        self.view!.presentScene(scene!, transition:transition)
+    }
+
     
     //ゲームクリア
     func gameClear(){
@@ -154,6 +173,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(clear!)
     }
 
+    
     //ゲームオーバー
     func gameOver(){
         //プレイヤー爆発 & 削除
@@ -179,16 +199,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let seAction:SKAction = SKAction(named: "EXPLOSION")!
         self.run(seAction)
     }
+    
+    
 
-    //シーン遷移
-    func backToStart(){
-        //同じGameSceneを開き直す
-        let transition = SKTransition.fade(withDuration: 2.0)
-        //GameScene.swiftを読み込み
-        let scene = GameScene(fileNamed: "GameScene")
-        //Sceneを画面いっぱいに表示設定
-        scene!.scaleMode = .aspectFill
-        //遷移実行
-        self.view!.presentScene(scene!, transition:transition)
-    }
 }

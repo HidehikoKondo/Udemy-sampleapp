@@ -12,11 +12,27 @@ import GameplayKit
 class GameScene: SKScene {
     
     private var label : SKLabelNode?
+    private var player : SKSpriteNode?
+    private var ball : SKSpriteNode?
+    private var blocks : SKNode?
+    private var gameStatus : String?
+    
     
     override func didMove(to view: SKView) {
+        //ゲームステータス（"START"：ゲームスタート　"PLAY"：プレイ中  "END"：ゲームオーバー・クリア）
+        self.gameStatus = "START"
         
-        // Get label node from scene and store it for use later
+        //ブロックを配置しているノードを取得
+        self.blocks = self.childNode(withName: "//BLOCKS")
+        
+        //ラベル
         self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
+        
+        //プレイヤー
+        self.player = self.childNode(withName: "//PLAYER") as? SKSpriteNode
+        
+        //ボール
+        self.ball = self.childNode(withName: "//BALL") as? SKSpriteNode
         
     }
     
@@ -31,11 +47,24 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+        //ゲームステータスに応じたタップ動作設定
+        if(self.gameStatus == "START"){
+            gameStart();
+        }else if(self.gameStatus == "END"){
+            backToStart()
+        }
+        
+        for t in touches {
+            //プレイヤーのxの位置を指の位置にする
+            self.player?.position.x = t.location(in: self).x
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
+        for t in touches {
+            //プレイヤーのxの位置を指の位置にする
+            self.player?.position.x = t.location(in: self).x
+        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -49,5 +78,30 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+    }
+    
+    //ゲームスタート
+    func gameStart(){
+        //ゲームステータスをプレイ中にする
+        self.gameStatus = "PLAY"
+        
+        //タイトルラベルを移動
+        self.label?.run(SKAction(named: "GAMESTART")!)
+        
+        //スタート処理（ボールを動かす）
+        let vector = CGVector(dx: 15, dy: -15)
+        self.ball?.physicsBody?.applyImpulse(vector)
+    }
+    
+    //シーン遷移
+    func backToStart(){
+        //同じGameSceneを開き直す
+        let transition = SKTransition.fade(withDuration: 2.0)
+        //GameScene.swiftを読み込み
+        let scene = GameScene(fileNamed: "GameScene")
+        //Sceneを画面いっぱいに表示設定
+        scene!.scaleMode = .aspectFill
+        //遷移実行
+        self.view!.presentScene(scene!, transition:transition)
     }
 }
