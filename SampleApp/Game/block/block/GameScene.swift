@@ -21,22 +21,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //ゲームステータス（"START"：ゲームスタート　"PLAY"：プレイ中  "END"：ゲームオーバー・クリア）
         self.gameStatus = "START"
 
-        //衝突判定のdelegate
-        self.physicsWorld.contactDelegate = self
-
         //ブロックを配置しているノードを取得
         self.blocks = self.childNode(withName: "//BLOCKS")
         
-
         //ラベル
         self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
 
         //プレイヤー
         self.player = self.childNode(withName: "//PLAYER") as? SKSpriteNode
-        self.player!.physicsBody?.usesPreciseCollisionDetection = true
+        
         //ボール
         self.ball = self.childNode(withName: "//BALL") as? SKSpriteNode
-        self.ball!.physicsBody?.usesPreciseCollisionDetection = true
+        
+        //衝突判定のdelegate
+        self.physicsWorld.contactDelegate = self
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
