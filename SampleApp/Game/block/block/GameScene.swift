@@ -92,20 +92,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (contact.bodyA.node?.name == "BLOCK"){
             //ブロックを消す
             contact.bodyA.node?.removeFromParent()
-            //パーティクル
-            starParticle(node: contact.bodyA.node!)
         }else if(contact.bodyB.node?.name == "BLOCK" ){
             //ブロックを消す
             contact.bodyB.node?.removeFromParent()
-            //パーティクル
-            starParticle(node: contact.bodyB.node!)
-        }
-
-        //ブロックの数が0ならゲームクリア
-        if(self.blocks!.children.count <= 0){
-            self.gameClear()
         }
     }
+//    func didBegin(_ contact: SKPhysicsContact) {
+//        //BLOCKに何かがぶつかったらブロックを消す
+//        if (contact.bodyA.node?.name == "BLOCK"){
+//            //ブロックを消す
+//            contact.bodyA.node?.removeFromParent()
+//            //パーティクル
+//            starParticle(node: contact.bodyA.node!)
+//        }else if(contact.bodyB.node?.name == "BLOCK" ){
+//            //ブロックを消す
+//            contact.bodyB.node?.removeFromParent()
+//            //パーティクル
+//            starParticle(node: contact.bodyB.node!)
+//        }
+//
+//        //ブロックの数が0ならゲームクリア
+//        if(self.blocks!.children.count <= 0){
+//            self.gameClear()
+//        }
+//    }
     
     //星のパーティクル
     func starParticle(node:SKNode){

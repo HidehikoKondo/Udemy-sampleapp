@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var label : SKLabelNode?
     private var player : SKSpriteNode?
@@ -19,6 +19,9 @@ class GameScene: SKScene {
     
     
     override func didMove(to view: SKView) {
+        //衝突判定のdelegate
+        self.physicsWorld.contactDelegate = self
+        
         //ゲームステータス（"START"：ゲームスタート　"PLAY"：プレイ中  "END"：ゲームオーバー・クリア）
         self.gameStatus = "START"
         
@@ -45,6 +48,19 @@ class GameScene: SKScene {
     
     func touchUp(atPoint pos : CGPoint) {
     }
+    
+    //ボールとブロックの衝突時の処理
+    func didBegin(_ contact: SKPhysicsContact) {
+        //BLOCKに何かがぶつかったらブロックを消す
+        if (contact.bodyA.node?.name == "BLOCK"){
+            //ブロックを消す
+            contact.bodyA.node?.removeFromParent()
+        }else if(contact.bodyB.node?.name == "BLOCK" ){
+            //ブロックを消す
+            contact.bodyB.node?.removeFromParent()
+        }
+    }
+
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //ゲームステータスに応じたタップ動作設定
